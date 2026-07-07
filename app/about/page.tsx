@@ -15,7 +15,7 @@ export default function About() {
       icon: Leaf,
       title: "Sustainability",
       description:
-        "We&apos;re committed to reducing carbon emissions and promoting clean energy adoption worldwide.",
+        "We're committed to reducing carbon emissions and promoting clean energy adoption worldwide.",
     },
     {
       icon: Users,
@@ -99,7 +99,7 @@ export default function About() {
           <div className="p-12 rounded-3xl bg-linear-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30 backdrop-blur-sm">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
             <p className="text-lg text-zinc-200 leading-relaxed mb-6">
-              At SolarBloom, our mission is to make clean, renewable energy
+              At GR Tech, our mission is to make clean, renewable energy
               accessible and affordable for everyone. We believe that solar
               energy is the key to a sustainable future, and we&apos;re
               dedicated to helping individuals and businesses harness the power

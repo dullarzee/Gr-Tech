@@ -1,15 +1,23 @@
 "use client";
 
+import { themePalette } from "@/lib/palette";
+import { useTheme } from "next-themes";
+
 export default function AboutSection() {
+  const { theme } = useTheme();
   return (
-    <section className="py-20 px-6 bg-zinc-900/50 border-t border-zinc-800/50">
-      <div className="max-w-4xl mx-auto">
+    <section
+      className={`py-20 px-6 border-t ${theme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
+    >
+      <div
+        className={`max-w-4xl mx-auto ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+      >
         <div className="mb-8">
           <p className="text-xs text-amber-400 font-semibold mb-3">
             About GR-Tech
           </p>
           <h2 className="text-4xl font-bold mb-6">
-            We are trusted solar energy solutions provider
+            We are a trusted solar energy solutions provider
           </h2>
           <p className="text-zinc-400 mb-4">
             delivering modern and efficient solar systems for residential,

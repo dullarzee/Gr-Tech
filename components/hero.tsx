@@ -3,27 +3,36 @@
 import { Zap, Sunrise, Droplet, ZapIcon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
 
 export default function Hero() {
+  const { theme } = useTheme();
   return (
-    <section className="relative w-full min-h-screen bg-linear-to-b from-zinc-950 via-zinc-900 to-zinc-950 overflow-hidden pt-32 pb-16">
+    <section
+      className={`relative w-full min-h-screen bg-linear-to-b overflow-hidden pt-32 pb-16 ${theme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+    >
       {/* Subtle background gradients */}
-      <div className="absolute bottom-0 w-full h-[90%] bg-emerald-800/10 rounded-full blur-3xl bg-linear-"></div>
+      <div
+        className={`absolute bottom-0 w-full h-[90%] rounded-full blur-3xl ${theme === "dark" ? "bg-emerald-800/10" : "bg-amber-500/20"}`}
+      ></div>
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-cyan-400/5 rounded-full blur-3xl"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
         {/* Badge */}
         <div className="flex justify-center mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 border border-zinc-700/50 backdrop-blur-sm">
+          <div
+            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-sm ${theme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
+          >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-xs text-zinc-300">
-              Solar Solutions, Simplified
-            </span>
+            <span className="text-xs">Solar Solutions, Simplified</span>
           </div>
         </div>
 
         {/* Main Headline */}
-        <h1 className="text-center text-5xl md:text-6xl lg:text-7xl font-bold mb-16 leading-tight tracking-tight">
+        <h1
+          className={`text-center text-4xl md:text-6xl lg:text-7xl font-bold mb-16 leading-tight tracking-tight ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+        >
           <span>Powering Tomorrow,</span>
           <span>
             <span className="bg-linear-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
@@ -39,7 +48,9 @@ export default function Hero() {
             {/* Environment Score Card */}
             <div className="group">
               <div className="flex items-center justify-start mb-2">
-                <div className="relative w-40 h-40 border border-white/20 rounded-full bg-white/5 backdrop-blur-sm">
+                <div
+                  className={`relative w-40 h-40 rounded-full ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+                >
                   <svg
                     className="w-full h-full transform -rotate-90"
                     viewBox="0 0 100 100"
@@ -76,7 +87,9 @@ export default function Hero() {
             </div>
 
             {/* Power Savings Card */}
-            <div className="group p-6 rounded-3xl border border-white/20 bg-white/5 space-y-5 backdrop-blur-sm ">
+            <div
+              className={`group p-6 rounded-3xl space-y-5 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+            >
               <section>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-8 rounded-lg bg-amber-400/20 flex items-center justify-center text-amber-400 font-bold">
@@ -128,7 +141,9 @@ export default function Hero() {
 
               {/* Top Right - IP68 */}
               <div className="absolute flex flex-col items-center justify-center gap-2 -top-8 mx-auto h-32">
-                <div className="inline-flex items-center justify-center gap-2 shrink-0 px-3 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs font-semibold text-cyan-300">
+                <div
+                  className={`inline-flex items-center justify-center gap-2 shrink-0 px-3 py-2 rounded-full text-xs font-semibold text-cyan-300 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+                >
                   <div className="flex items-center justify-center h-6 w-6 bg-white/20 backdrop-blur-sm rounded-full p-0.5">
                     <Droplet className="w-full text-green-400 mx-auto" />
                   </div>
@@ -136,25 +151,29 @@ export default function Hero() {
                     IP68 <span className="text-white">Waterproof</span>
                   </span>
                 </div>
-                <div className="w-[2px] bg-zinc-500 h-4/5 rounded-full" />
+                <div className="w-0.5 bg-zinc-500 h-4/5 rounded-full" />
               </div>
 
               {/* Left - Sun Power */}
-              <div className="absolute flex items-center gap-2 top-13 -left-8 h-32 w-58">
-                <div className="shrink-0 flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs">
+              <div className="absolute flex items-center gap-2 top-24 -left-10 md:top-13 md:-left-8 -rotate-55 md:rotate-0 h-32 w-58">
+                <div
+                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-full text-xs ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg} ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
                   <div className="flex items-center justify-center h-6 w-6 bg-white/20 backdrop-blur-sm rounded-full p-0.5">
                     <Sun className="w-full text-green-400 mx-auto" />
                   </div>
-                  <div className="text-zinc-200 font-semibold shrink-0">
+                  <div className="text-white font-semibold shrink-0">
                     Sun Power
                   </div>
                 </div>
-                <div className="w-full bg-zinc-500 h-[2px] rounded-full" />
+                <div className="w-full bg-zinc-500 h-0.5 rounded-full" />
               </div>
 
-              <div className="absolute flex items-center gap-2 top-16 -right-6 h-32 w-58 ">
-                <div className="w-full bg-zinc-500 h-[2px] rounded-full" />
-                <div className="shrink-0 flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs">
+              <div className="absolute flex flex-col md:flex-row items-center gap-2 md:top-16 md:-right-6 md:h-32 h-60 md:w-58 mx-auto md:mx-0 bottom-0 md:bottom-auto">
+                <div className="h-full w-0.5 md:w-full bg-zinc-500 md:h-0.5 rounded-full" />
+                <div
+                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-full text-xs ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+                >
                   <div className="flex items-center justify-center h-6 w-6 bg-white/20 backdrop-blur-sm rounded-full p-0.5">
                     <ZapIcon className="w-full text-green-400 mx-auto" />
                   </div>
@@ -169,7 +188,9 @@ export default function Hero() {
           {/* Right Column - Cards */}
           <div className="space-y-4">
             {/* Description */}
-            <div className="p-4 flex flex-col rounded-3xl border border-white/20 bg-white/5 backdrop-blur-sm text-xs leading-relaxed text-zinc-300">
+            <div
+              className={`p-4 flex flex-col rounded-3xl text-xs leading-relaxed text-zinc-100 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+            >
               <div className="inline-flex items-center justify-between gap-2 mb-2">
                 <span className="text-sm font-semibold leading-tight pr-2">
                   From Sun to Socket Seamlessly
@@ -231,7 +252,9 @@ export default function Hero() {
           height="200"
         />
       </div>
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-zinc-950 to-transparent" />
+      {theme === "dark" && (
+        <div className="absolute bottom-0 w-full h-32 bg-linear-to-t from-zinc-950 to-transparent" />
+      )}
     </section>
   );
 }

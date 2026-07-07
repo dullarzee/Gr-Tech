@@ -1,34 +1,47 @@
-'use client'
+"use client";
 
-import { Award, Zap, Users, TrendingUp } from 'lucide-react'
+import { Award, Zap, Users, TrendingUp } from "lucide-react";
+import { themePalette } from "@/lib/palette";
+import { useTheme } from "next-themes";
 
 export default function WhyChooseUs() {
+  const { theme } = useTheme();
+
   const reasons = [
-    { icon: Award, text: 'Experienced and skilled team' },
-    { icon: Zap, text: 'High-quality solar products' },
-    { icon: TrendingUp, text: 'Affordable pricing' },
-    { icon: Users, text: 'Hassle-after-sales support' },
-  ]
+    { icon: Award, text: "Experienced and skilled team" },
+    { icon: Zap, text: "High-quality solar products" },
+    { icon: TrendingUp, text: "Affordable pricing" },
+    { icon: Users, text: "Hassle-after-sales support" },
+  ];
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-r from-zinc-900 to-emerald-950/30">
+    <section
+      className={`py-20 px-6 bg-gradient-to-r ${theme === "dark" ? "from-zinc-900 to-emerald-950/30" : "from-zinc-100 via-zinc-100 via-65% to-emerald-100"}`}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left content */}
           <div>
             <p className="text-xs text-amber-400 font-semibold mb-3">Quality</p>
-            <h2 className="text-4xl font-bold mb-8">Why Choose Us</h2>
+            <h2
+              className={`text-4xl font-bold mb-8 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
+              Why Choose Us
+            </h2>
             <ul className="space-y-4">
               {reasons.map((item, idx) => {
-                const Icon = item.icon
+                const Icon = item.icon;
                 return (
-                  <li key={idx} className="flex items-center gap-4">
+                  <li
+                    key={idx}
+                    className={`flex items-center gap-4 ${theme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                  >
                     <div className="w-10 h-10 rounded-lg bg-amber-400/20 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-5 h-5 text-amber-400" />
                     </div>
-                    <span className="text-zinc-300">{item.text}</span>
+                    <span className="">{item.text}</span>
                   </li>
-                )
+                );
               })}
             </ul>
           </div>
@@ -55,5 +68,5 @@ export default function WhyChooseUs() {
         </div>
       </div>
     </section>
-  )
+  );
 }

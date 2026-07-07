@@ -1,15 +1,28 @@
-'use client'
+"use client";
 
-import { Button } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { themePalette } from "@/lib/palette";
+import { useTheme } from "next-themes";
 
 export default function CTASection() {
+  const { theme } = useTheme();
+
   return (
-    <section className="py-20 px-6 bg-gradient-to-r from-emerald-950/50 to-zinc-950">
+    <section
+      className={`py-20 px-6 bg-gradient-to-r ${theme === "dark" ? "from-emerald-950/50 to-zinc-950" : "from-emerald-300 via-emerald-300 via-2% to-zinc-100"}`}
+    >
       <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-5xl font-bold mb-6">Switch to Solar Energy Today</h2>
-        <p className="text-zinc-400 mb-8 text-lg">
-          Join thousands of homeowners and businesses already saving with clean, renewable energy.
+        <h2
+          className={`text-5xl font-bold mb-6 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+        >
+          Switch to Solar Energy Today
+        </h2>
+        <p
+          className={`mb-8 text-lg ${theme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+        >
+          Join thousands of homeowners and businesses already saving with clean,
+          renewable energy.
         </p>
         <Button className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-lg group">
           Get Started Now
@@ -17,5 +30,5 @@ export default function CTASection() {
         </Button>
       </div>
     </section>
-  )
+  );
 }

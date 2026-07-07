@@ -38,7 +38,7 @@ export default function Contact() {
     {
       icon: Phone,
       label: "Phone",
-      value: "1-800-SOLAR-1",
+      value: "+234 8091691064",
       detail: "Available Monday-Friday, 9AM-6PM EST",
     },
     {
@@ -50,13 +50,13 @@ export default function Contact() {
     {
       icon: MapPin,
       label: "Address",
-      value: "123 Solar Lane, Sun Valley, CA 94088",
+      value: "Eleganza garden, opposite VGC, Lekki, Lagos",
       detail: "Headquarters & Installation Hub",
     },
     {
       icon: Clock,
       label: "Hours",
-      value: "9:00 AM - 6:00 PM EST",
+      value: "9:00 AM - 6:00 PM WAT",
       detail: "Monday through Friday",
     },
   ];

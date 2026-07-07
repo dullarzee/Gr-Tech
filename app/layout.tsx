@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { geistMono, geistSans, notoSans } from "@/lib/fonts";
+import {ThemeProvider} from "next-themes";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -32,6 +33,8 @@ export const viewport: Viewport = {
   themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#18181b" }],
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,7 +48,9 @@ export default function RootLayout({
       <body
         className={`font-sans antialiased bg-zinc-950 text-white ${geistMono.className}`}
       >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>
+          {children}
+        </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

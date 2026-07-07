@@ -160,10 +160,11 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+  }
+  body {
+    @apply min-h-screen bg-background text-foreground antialiased;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }

@@ -32,9 +32,9 @@ export default function Page() {
       <ServicesGrid />
       <WhyChooseUs />
       <BenefitsSection />
-      <FAQSection />
-      <CTASection />
       <TestimonialsSection />
+      <CTASection />
+      <FAQSection />
       <Footer />
     </div>
   );
