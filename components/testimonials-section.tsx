@@ -10,7 +10,7 @@ export default function TestimonialsSection() {
     {
       name: "John Anderson",
       role: "Homeowner",
-      text: "Great company! Installing their solar system was the best decision I made. We&apos;ve saved so much on electricity bills!",
+      text: "Great company! Installing their solar system was the best decision I made. We've saved so much on electricity bills!",
       rating: 5,
     },
     {
@@ -22,7 +22,7 @@ export default function TestimonialsSection() {
     {
       name: "Mike Thompson",
       role: "Farmer",
-      text: "Switched to solar power two years ago and couldn&apos;t be happier. Their team provided excellent support throughout.",
+      text: "Switched to solar power two years ago and couldn't be happier. Their team provided excellent support throughout.",
       rating: 5,
     },
   ];

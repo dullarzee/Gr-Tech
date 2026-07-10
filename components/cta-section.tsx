@@ -10,7 +10,7 @@ export default function CTASection() {
 
   return (
     <section
-      className={`py-20 px-6 bg-gradient-to-r ${theme === "dark" ? "from-emerald-950/50 to-zinc-950" : "from-emerald-300 via-emerald-300 via-2% to-zinc-100"}`}
+      className={`py-20 px-6 ${theme === "dark" ? "bg-gradient-to-r" : "bg-gradient-to-br"} ${theme === "dark" ? "from-emerald-950/50 to-zinc-950" : "from-emerald-300 via-emerald-300 via-2% to-zinc-100"}`}
     >
       <div className="max-w-3xl mx-auto text-center">
         <h2

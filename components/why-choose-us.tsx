@@ -16,7 +16,7 @@ export default function WhyChooseUs() {
 
   return (
     <section
-      className={`py-20 px-6 bg-gradient-to-r ${theme === "dark" ? "from-zinc-900 to-emerald-950/30" : "from-zinc-100 via-zinc-100 via-65% to-emerald-100"}`}
+      className={`py-20 px-6 bg-gradient-to-br lg:bg-gradient-to-r ${theme === "dark" ? "from-zinc-900 to-emerald-950/30" : "from-zinc-100 via-zinc-100 via-65% to-emerald-100"}`}
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
