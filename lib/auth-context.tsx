@@ -112,9 +112,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    const res = await axios.get(BEendpoints.logout);
+    const res = await axios.get(BEendpoints.logout, { withCredentials: true });
     if (res.data.ok) {
       setUser(null);
+      toast.success(res.data.message || "Logged out successfully");
       router.push("/");
     } else {
       toast.error("Logout failed");

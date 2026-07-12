@@ -1,11 +1,12 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { geistMono, geistSans, notoSans } from "@/lib/fonts";
-import { ThemeProvider, useTheme } from "next-themes";
+import { useTheme } from "next-themes";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 import { CartProvider } from "@/lib/cart-context";
 import { Toaster } from "sonner";
+import ThemeProvider from "@/components/ui/themeProvider";
 import axios from "axios";
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   axios.defaults.withCredentials = true;
+
   return (
     <html
       lang="en"
@@ -55,13 +57,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${notoSans.variable} bg-zinc-950`}
     >
       <body
-        className={`font-sans antialiased bg-zinc-950 text-white ${geistMono.className}`}
+        className={`font-sans antialiased bg-zinc-950 text-white [&_*]:transition-colors [&_*]:ease-out  [&_*]:duration-100 ${geistMono.className}`}
       >
         <AuthProvider>
           <CartProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="light"
+              defaultTheme="dark"
               enableSystem={true}
               scriptProps={scriptProps}
             >

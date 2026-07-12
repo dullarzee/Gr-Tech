@@ -2,29 +2,51 @@
 
 import { Sun } from "lucide-react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
 
 export default function Footer() {
+  const { theme } = useTheme();
   return (
-    <footer className="bg-zinc-900 border-t border-zinc-800/50 px-6 py-12">
+    <footer
+      className={`border-t border-zinc-800/50 px-6 py-12 ${theme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Image
-                alt="Gr tech logo"
-                src="/images/gr-tech-bgless-logo-dark.png"
-                width={65}
-                height={65}
-              />
-              <span className="text-xl font-bold">GR Tech</span>
+              {theme === "dark" ? (
+                <Image
+                  alt="Gr tech logo"
+                  src="/images/gr-tech-bgless-logo-dark.png"
+                  width={65}
+                  height={65}
+                />
+              ) : (
+                <Image
+                  alt="Gr tech logo"
+                  src="/images/gr-tech-bgless-logo.png"
+                  width={65}
+                  height={65}
+                />
+              )}
+              <span
+                className={`text-xl font-bold ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+              >
+                GR Tech
+              </span>
             </div>
             <p className="text-sm text-zinc-500">Powering tomorrow, today.</p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold mb-4">Quick Links</h3>
+            <h3
+              className={`font-semibold mb-4 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
+              Quick Links
+            </h3>
             <ul className="space-y-2 text-sm text-zinc-400">
               <li>
                 <a href="#" className="hover:text-amber-400 transition">
@@ -51,7 +73,11 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold mb-4">Company</h3>
+            <h3
+              className={`font-semibold mb-4 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
+              Company
+            </h3>
             <ul className="space-y-2 text-sm text-zinc-400">
               <li>
                 <a href="#" className="hover:text-amber-400 transition">
@@ -78,7 +104,11 @@ export default function Footer() {
 
           {/* Get In Touch */}
           <div>
-            <h3 className="font-semibold mb-4">Get In Touch</h3>
+            <h3
+              className={`font-semibold mb-4 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
+              Get In Touch
+            </h3>
             <ul className="space-y-2 text-sm text-zinc-400">
               <li>
                 <a

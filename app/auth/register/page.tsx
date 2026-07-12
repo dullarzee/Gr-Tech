@@ -14,9 +14,9 @@ import {
   EyeClosed,
   Eye,
 } from "lucide-react";
-import axios from "axios";
 import { BEendpoints } from "@/constants/urls/backendUrls";
-import { toast } from "sonner";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -30,6 +30,7 @@ export default function RegisterPage() {
     confirmPassword: false,
   });
   const { register, isAuthenticated, loading } = useAuth();
+  const { resolvedTheme } = useTheme();
 
   // Redirect if already logged in
 
@@ -81,26 +82,34 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4 py-12">
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 py-12 ${resolvedTheme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
+    >
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">
+          <h1
+            className={`text-3xl md:text-4xl font-bold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+          >
             Register with GR-Tech
           </h1>
-          <p className="text-zinc-400">
+          <p
+            className={`${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+          >
             Create your account and start saving with solar
           </p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl p-8 backdrop-blur-md">
+        <div
+          className={`rounded-2xl p-8 backdrop-blur-md ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.backgroundPrimary}`}
+        >
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name Field */}
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-semibold mb-2"
+                className={`block text-sm font-semibold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragraph_text_lighter : themePalette.light.paragraph_text_lighter}`}
               >
                 Full Name
               </label>
@@ -112,7 +121,7 @@ export default function RegisterPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="John Doe"
-                  className="w-full pl-10 pr-4 py-3 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:border-amber-400/50 focus:outline-none transition-colors text-white placeholder-zinc-500"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   required
                 />
               </div>
@@ -122,7 +131,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-semibold mb-2"
+                className={`block text-sm font-semibold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragraph_text_lighter : themePalette.light.paragraph_text_lighter}`}
               >
                 Email Address
               </label>
@@ -134,7 +143,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full pl-10 pr-4 py-3 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:border-amber-400/50 focus:outline-none transition-colors text-white placeholder-zinc-500"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   required
                 />
               </div>
@@ -144,7 +153,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-semibold mb-2"
+                className={`block text-sm font-semibold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragraph_text_lighter : themePalette.light.paragraph_text_lighter}`}
               >
                 Password
               </label>
@@ -156,7 +165,7 @@ export default function RegisterPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:border-amber-400/50 focus:outline-none transition-colors text-white placeholder-zinc-500"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   required
                 />
 
@@ -195,7 +204,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-semibold mb-2"
+                className={`block text-sm font-semibold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragraph_text_lighter : themePalette.light.paragraph_text_lighter}`}
               >
                 Confirm Password
               </label>
@@ -207,7 +216,7 @@ export default function RegisterPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:border-amber-400/50 focus:outline-none transition-colors text-white placeholder-zinc-500"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   required
                 />
                 <div className="absolute right-3 top-3.5 w-5 h-5 text-amber-400/60">

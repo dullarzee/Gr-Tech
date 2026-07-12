@@ -12,6 +12,7 @@ import { geistMono } from "@/lib/fonts";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { useCart } from "@/lib/cart-context";
 
 export default function Navigation() {
   const [activeLink, setActiveLink] = useState("/");
@@ -22,13 +23,15 @@ export default function Navigation() {
 
   const router = useRouter();
   const { user, isAuthenticated, logout } = useAuth();
+  const { items } = useCart();
 
   const links = [
     { name: "home", path: "/" },
-    { name: "shop", path: "products" },
-    { name: "resources", path: "resources" },
-    { name: "about", path: "about" },
-    { name: "contact", path: "contact" },
+    { name: "shop", path: "/products" },
+    { name: "resources", path: "/resources" },
+    { name: "about", path: "/about" },
+    { name: "contact", path: "/contact" },
+    { name: "cart", path: "/cart" },
   ];
 
   useEffect(() => {
@@ -84,13 +87,27 @@ export default function Navigation() {
       <div
         className={`hidden md:flex items-center text-sm border-3 border-gray-500/50 p-1 rounded-lg ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
       >
-        {links.map((link) => (
+        {links.map((link, idx) => (
           <Link
             key={link.name}
             href={link.path}
             className={`hover:text-amber-400 transition-colors capitalize px-3 py-1 rounded-sm ${activeLink === link.path ? "bg-gray-500/50" : "bg-none"}`}
           >
-            {link.name}
+            {idx < links.length - 1 ? (
+              link.name
+            ) : (
+              <div className="relative inline-flex justify-center items-center">
+                <ShoppingCart
+                  className={`w-4.5 h-4.5 hover:text-amber-400 ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                />
+
+                {items.length > 0 && (
+                  <span className="bg-amber-500 absolute -top-3.5 -right-4 text-white text-[0.65em] px-2.5 py-0.5 block rounded-full">
+                    {items.length}
+                  </span>
+                )}
+              </div>
+            )}
           </Link>
         ))}
       </div>
@@ -157,9 +174,14 @@ export default function Navigation() {
           >
             <div className="flex items-center justify-between px-6 py-4">
               <Link href="/cart">
-                <ShoppingCart
-                  className={`w-6 h-6 ${isDarkTheme ? "text-white" : "text-zinc-900"}`}
-                />
+                <div className="relative inline-flex justify-center items-center">
+                  <ShoppingCart
+                    className={`w-6 h-6 ${isDarkTheme ? "text-white" : "text-zinc-900"}`}
+                  />
+                  <span className="bg-amber-500 absolute -top-5 -right-3 text-white text-[0.65em] px-2.5 py-0.5 block rounded-full">
+                    {items.length}
+                  </span>
+                </div>
               </Link>
               {isDarkTheme ? (
                 <Image
@@ -183,13 +205,13 @@ export default function Navigation() {
               </button>
             </div>
             <section className="flex flex-col mt-8 gap-y-3 items-center">
-              {links.map((link) => (
+              {links.map((link, idx) => (
                 <Link
                   key={link.name}
                   href={link.path}
                   className={`hover:scale-[1.1] active:scale-[1.2] transition-colors capitalize px-3 py-1 rounded-sm text-xl ${activeLink === link.path ? "text-amber-500 text-4xl" : isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
                 >
-                  {link.name.toUpperCase()}
+                  {idx !== links.length - 1 && link.name.toUpperCase()}
                 </Link>
               ))}
             </section>

@@ -24,8 +24,13 @@ import axios from "axios";
 import { toast } from "sonner";
 import Image from "next/image";
 import { ProductTypes } from "@/types";
+import Header from "@/components/header";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
+import { resolve } from "path";
 
 export default function ProductDetailPage() {
+  const { resolvedTheme } = useTheme();
   const params = useParams();
   const router = useRouter();
   const { addItem } = useCart();
@@ -35,7 +40,6 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [addedToCart, setAddedToCart] = useState(false);
   const [selectedSpecs, setSelectedSpecs] = useState("default");
 
   useEffect(() => {
@@ -68,24 +72,27 @@ export default function ProductDetailPage() {
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.imageUrl,
+      imageUrl: product.imageUrl,
       quantity,
       specs: selectedSpecs,
       category: product.category,
     });
-
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div
+        className={`min-h-screen flex items-center justify-center ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+      >
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-400/20 mb-4">
             <div className="w-8 h-8 border-2 border-amber-400/30 border-t-amber-400 rounded-full animate-spin"></div>
           </div>
-          <p className="text-zinc-400">Loading product...</p>
+          <p
+            className={`text-zinc-400 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+          >
+            Loading product...
+          </p>
         </div>
       </div>
     );
@@ -93,12 +100,14 @@ export default function ProductDetailPage() {
 
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div
+        className={`min-h-screen flex items-center justify-center ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+      >
         <div className="text-center">
           <p className="text-red-400 mb-4">{error || "Product not found"}</p>
           <Button
             onClick={() => router.back()}
-            className="bg-amber-400 text-zinc-950 hover:bg-amber-300"
+            className={`text-zinc-950 hover:bg-amber-300 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
           >
             Go Back
           </Button>
@@ -108,7 +117,10 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 pt-20">
+    <div
+      className={`min-h-screen pt-20 ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+    >
+      <Header />
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
         <div className="flex items-center gap-2 text-sm text-zinc-400">
@@ -126,13 +138,13 @@ export default function ProductDetailPage() {
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
           {/* Product Image */}
           <div>
-            <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl /p-6 /md:p-8 aspect-square flex items-center justify-center">
+            <div className="rounded-2xl aspect-square flex items-center justify-center z-2">
               <Image
                 alt={`image of ${product.name}`}
                 src={product.imageUrl}
                 width={500}
                 height={500}
-                className="rounded-sm w-full h-full"
+                className="w-full h-full border-3 border-zinc-400/50 rounded-4xl aspect-square"
               />
             </div>
           </div>
@@ -147,7 +159,9 @@ export default function ProductDetailPage() {
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold mb-2">
+              <h1
+                className={`text-3xl md:text-4xl font-bold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+              >
                 {product.name}
               </h1>
 
@@ -172,7 +186,9 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Description */}
-              <p className="text-zinc-400 mb-6 leading-relaxed line-clamp-4">
+              <p
+                className={`text-zinc-400 mb-6 leading-relaxed line-clamp-4 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+              >
                 {product.description}
               </p>
 
@@ -206,7 +222,9 @@ export default function ProductDetailPage() {
               <label className="block text-sm font-semibold mb-3">
                 Quantity
               </label>
-              <div className="flex items-center gap-3 bg-zinc-800/50 border border-zinc-700/50 rounded-lg w-fit p-2">
+              <div
+                className={`flex items-center gap-3 rounded-lg w-fit p-2 ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
+              >
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-8 h-8 flex items-center justify-center text-zinc-400 hover:text-amber-400 transition-colors"
@@ -238,7 +256,7 @@ export default function ProductDetailPage() {
                     className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                       selectedSpecs === variant
                         ? "bg-amber-400 text-zinc-950"
-                        : "bg-zinc-800/50 border border-zinc-700/50 text-zinc-300 hover:border-amber-400/50"
+                        : `hover:border-amber-400/50 ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`
                     }`}
                   >
                     {variant}
@@ -252,17 +270,10 @@ export default function ProductDetailPage() {
               <Button
                 onClick={handleAddToCart}
                 disabled={product.stock <= 0}
-                className={`flex-1 font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all ${
-                  addedToCart
-                    ? "bg-emerald-500 text-white hover:bg-emerald-500"
-                    : "bg-amber-400 text-zinc-950 hover:bg-amber-300"
-                }`}
+                className={`flex-1 font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all bg-amber-400 text-zinc-950 hover:bg-amber-300`}
               >
-                {addedToCart ? (
-                  <>
-                    <Check className="w-5 h-5" />
-                    Added to Cart
-                  </>
+                {!isAuthenticated ? (
+                  "Login to continue shopping"
                 ) : (
                   <>
                     <ShoppingCart className="w-5 h-5" />
@@ -285,8 +296,12 @@ export default function ProductDetailPage() {
         {/* Features Section */}
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
           {/* Features */}
-          <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl p-6 md:p-8">
-            <h3 className="text-xl font-bold mb-6">
+          <div
+            className={`rounded-2xl p-6 md:p-8 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+          >
+            <h3
+              className={`text-xl font-bold mb-6 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
               Features & Specifications
             </h3>
             <ul className="space-y-3">
@@ -302,42 +317,76 @@ export default function ProductDetailPage() {
           {/* Additional Info */}
           <div className="space-y-4">
             {/* Warranty */}
-            <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl p-6 flex items-start gap-4">
+            <div
+              className={`rounded-2xl p-6 flex items-start gap-4 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+            >
               <Award className="w-8 h-8 text-amber-400 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold mb-1">Warranty</h4>
-                <p className="text-sm text-zinc-400">{10}</p>
+                <h4
+                  className={`font-semibold mb-1 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
+                  Warranty
+                </h4>
+                <p
+                  className={`text-sm ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                >
+                  {10}
+                </p>
               </div>
             </div>
 
             {/* Shipping */}
-            <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl p-6 flex items-start gap-4">
+            <div
+              className={`rounded-2xl p-6 flex items-start gap-4 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+            >
               <Truck className="w-8 h-8 text-emerald-400 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold mb-1">Fast Shipping</h4>
-                <p className="text-sm text-zinc-400">
+                <h4
+                  className={`font-semibold mb-1 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
+                  Fast Shipping
+                </h4>
+                <p
+                  className={`text-sm ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                >
                   Free shipping on orders over $500
                 </p>
               </div>
             </div>
 
             {/* Returns */}
-            <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl p-6 flex items-start gap-4">
+            <div
+              className={`rounded-2xl p-6 flex items-start gap-4 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+            >
               <RotateCcw className="w-8 h-8 text-blue-400 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold mb-1">Easy Returns</h4>
-                <p className="text-sm text-zinc-400">
+                <h4
+                  className={`font-semibold mb-1 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
+                  Easy Returns
+                </h4>
+                <p
+                  className={`text-sm ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                >
                   30-day money-back guarantee
                 </p>
               </div>
             </div>
 
             {/* Support */}
-            <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl p-6 flex items-start gap-4">
+            <div
+              className={`rounded-2xl p-6 flex items-start gap-4 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+            >
               <Package className="w-8 h-8 text-cyan-400 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold mb-1">Expert Support</h4>
-                <p className="text-sm text-zinc-400">
+                <h4
+                  className={`font-semibold mb-1 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
+                  Expert Support
+                </h4>
+                <p
+                  className={`text-sm ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                >
                   24/7 customer support team
                 </p>
               </div>

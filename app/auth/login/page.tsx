@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
+import { resolve } from "path";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,6 +19,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { login, isAuthenticated } = useAuth();
 
+  const { resolvedTheme } = useTheme();
   // Redirect if already logged in
   if (isAuthenticated) {
     router.push("/");
@@ -39,22 +43,34 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4 py-12">
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 py-12 ${resolvedTheme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
+    >
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">Welcome Back</h1>
-          <p className="text-zinc-400">Sign in to your account</p>
+          <h1
+            className={`text-3xl md:text-4xl font-bold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+          >
+            Welcome Back
+          </h1>
+          <p
+            className={`${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+          >
+            Sign in to your account
+          </p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-2xl p-8 backdrop-blur-md">
+        <div
+          className={`rounded-2xl p-8 backdrop-blur-md ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.backgroundPrimary}`}
+        >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-semibold mb-2"
+                className={`block text-sm font-semibold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragraph_text_lighter : themePalette.light.paragraph_text_lighter}`}
               >
                 Email Address
               </label>
@@ -66,7 +82,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full pl-10 pr-4 py-3 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:border-amber-400/50 focus:outline-none transition-colors text-white placeholder-zinc-500"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   required
                 />
               </div>
@@ -77,7 +93,7 @@ export default function LoginPage() {
               <div className="flex items-center justify-between mb-2">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold"
+                  className={`block text-sm font-semibold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragraph_text_lighter : themePalette.light.paragraph_text_lighter}`}
                 >
                   Password
                 </label>
@@ -96,7 +112,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:border-amber-400/50 focus:outline-none transition-colors text-white placeholder-zinc-500"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   required
                 />
               </div>

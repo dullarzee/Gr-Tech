@@ -2,9 +2,11 @@
 
 import Navigation from "@/components/header";
 import Footer from "@/components/footer";
-import { Button } from "@/components/ui/button";
-import { Clock, ArrowRight } from "lucide-react";
+import NewsletterSection from "@/components/ui/newsletterSection";
 import { useState } from "react";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
+import ResourceCard from "@/components/ui/resourceCard";
 
 const resources = [
   {
@@ -99,18 +101,19 @@ const resources = [
   },
 ];
 
+export const categories = [
+  { id: "all", name: "All Resources" },
+  { id: "guide", name: "Guides" },
+  { id: "article", name: "Articles" },
+  { id: "tips", name: "Tips & Tricks" },
+  { id: "comparison", name: "Comparisons" },
+  { id: "technical", name: "Technical" },
+];
+
 export default function ResourcesPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-
-  const categories = [
-    { id: "all", name: "All Resources" },
-    { id: "guide", name: "Guides" },
-    { id: "article", name: "Articles" },
-    { id: "tips", name: "Tips & Tricks" },
-    { id: "comparison", name: "Comparisons" },
-    { id: "technical", name: "Technical" },
-  ];
+  const { resolvedTheme } = useTheme();
 
   const filteredResources = resources
     .filter(
@@ -121,11 +124,15 @@ export default function ResourcesPage() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-zinc-950 pt-24">
+      <main
+        className={`min-h-screen pt-24 ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+      >
         {/* Hero Section */}
         <section className="px-4 md:px-8 py-16 border-b border-zinc-800/30">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1
+              className={`text-4xl md:text-5xl font-bold mb-4 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
               Solar Resources & Learning Center
             </h1>
             <p className="text-zinc-400 text-lg">
@@ -136,7 +143,9 @@ export default function ResourcesPage() {
         </section>
 
         {/* Search and Filters */}
-        <section className="px-4 md:px-8 py-12 border-b border-zinc-800/30">
+        <section
+          className={`px-4 md:px-8 py-12 /border-b border-zinc-800/30 ${resolvedTheme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
+        >
           <div className="max-w-6xl mx-auto">
             <div className="mb-8">
               <input
@@ -144,7 +153,7 @@ export default function ResourcesPage() {
                 placeholder="Search articles..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-6 py-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-amber-400"
+                className={`w-full px-6 py-3 rounded-lg /border /border-zinc-700/50 placeholder-zinc-500 focus:outline-none focus:border-amber-400 ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
               />
             </div>
 
@@ -156,7 +165,7 @@ export default function ResourcesPage() {
                   className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
                     selectedCategory === cat.id
                       ? "bg-amber-400 text-zinc-950"
-                      : "bg-zinc-800/50 hover:bg-zinc-800 text-zinc-300"
+                      : `${resolvedTheme === "dark" ? `${themePalette.dark.chip_style} hover:bg-zinc-800` : `${themePalette.light.chip_style} hover:bg-zinc-200`}`
                   }`}
                 >
                   {cat.name}
@@ -167,55 +176,21 @@ export default function ResourcesPage() {
         </section>
 
         {/* Resources Grid */}
-        <section className="px-4 md:px-8 py-16">
+        <section
+          className={`px-4 md:px-8 py-16 ${resolvedTheme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
+        >
           <div className="max-w-6xl mx-auto">
             {filteredResources.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredResources.map((resource) => (
-                  <a
-                    key={resource.id}
-                    href="#"
-                    className="group p-6 rounded-2xl bg-gradient-to-br from-zinc-800/40 to-zinc-900/40 border border-zinc-700/30 hover:border-amber-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/10 flex flex-col"
-                  >
-                    {/* Image/Icon */}
-                    <div className="w-full h-40 rounded-lg bg-gradient-to-br from-zinc-700/50 to-zinc-800/50 flex items-center justify-center mb-4 text-5xl group-hover:scale-105 transition-transform">
-                      {resource.image}
-                    </div>
-
-                    {/* Category Badge */}
-                    <div className="mb-3">
-                      <span className="inline-block px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-semibold uppercase">
-                        {
-                          categories.find((c) => c.id === resource.category)
-                            ?.name
-                        }
-                      </span>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="font-bold text-lg mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
-                      {resource.title}
-                    </h3>
-
-                    {/* Excerpt */}
-                    <p className="text-sm text-zinc-400 mb-4 flex-grow line-clamp-3">
-                      {resource.excerpt}
-                    </p>
-
-                    {/* Meta */}
-                    <div className="flex items-center justify-between pt-4 border-t border-zinc-700/30">
-                      <div className="flex items-center gap-2 text-xs text-zinc-400">
-                        <Clock className="w-3 h-3" />
-                        {resource.readTime} min read
-                      </div>
-                      <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </a>
+                  <ResourceCard resource={resource} />
                 ))}
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-zinc-400 text-lg">
+                <p
+                  className={`text-lg ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
                   No resources found matching your criteria.
                 </p>
               </div>
@@ -226,7 +201,9 @@ export default function ResourcesPage() {
         {/* Featured Topics */}
         <section className="px-4 md:px-8 py-16 border-t border-zinc-800/30">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12 text-center">
+            <h2
+              className={`text-3xl font-bold mb-12 text-center ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
               Popular Topics
             </h2>
             <div className="grid md:grid-cols-4 gap-6">
@@ -239,7 +216,7 @@ export default function ResourcesPage() {
                 <a
                   key={topic.title}
                   href="#"
-                  className="group p-6 rounded-2xl bg-gradient-to-br from-zinc-800/30 to-zinc-900/30 border border-zinc-700/30 hover:border-amber-400/50 transition-all text-center hover:shadow-lg hover:shadow-amber-400/10"
+                  className={`group p-6 rounded-2xl /border border-zinc-700/30 hover:border-amber-400/50 transition-all text-center hover:shadow-lg hover:shadow-amber-400/10 ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
                 >
                   <h3 className="font-bold text-lg mb-2 group-hover:text-amber-400 transition-colors">
                     {topic.title}
@@ -254,25 +231,7 @@ export default function ResourcesPage() {
         </section>
 
         {/* Newsletter */}
-        <section className="px-4 md:px-8 py-16 border-t border-zinc-800/30">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-            <p className="text-zinc-400 mb-8">
-              Subscribe to our newsletter for the latest solar tips, industry
-              news, and exclusive content.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-amber-400"
-              />
-              <Button className="bg-amber-400 text-zinc-950 hover:bg-amber-300 font-semibold px-8 py-3">
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        </section>
+        <NewsletterSection />
       </main>
       <Footer />
     </>

@@ -11,3 +11,13 @@ export interface ProductTypes {
   features: string[];
   description: string;
 }
+
+export interface ResourceTypes {
+  id: number;
+  title: string;
+  category: string;
+  excerpt: string;
+  readTime: number;
+  date: string;
+  image: string;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Zap, Sunrise, Droplet, ZapIcon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import DotField from "./DotField";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { themePalette } from "@/lib/palette";
@@ -12,6 +12,22 @@ export default function Hero() {
     <section
       className={`relative w-full min-h-screen bg-linear-to-b overflow-hidden pt-32 pb-16 ${theme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
     >
+      {/* <div style={{ width: "100%", height: "100%", position: "relative" }}> */}
+      {/* <DotField */}
+      {/* // dotRadius={1.5}
+        // dotSpacing={14}
+        // cursorRadius={500}
+        // cursorForce={0.1}
+        // bulgeOnly
+        // bulgeStrength={67}
+        // glowRadius={160}
+        // sparkle={false}
+        // waveAmplitude={0}
+        // gradientFrom="rgba(168, 85, 247, 0.35)"
+        // gradientTo="rgba(180, 151, 207, 0.25)"
+        // glowColor="#120F17"
+        ///> */}
+      {/* </div> */}
       {/* Subtle background gradients */}
       <div
         className={`absolute bottom-0 w-full h-[90%] rounded-full blur-3xl ${theme === "dark" ? "bg-emerald-800/10" : "bg-amber-500/20"}`}

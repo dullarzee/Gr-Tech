@@ -5,7 +5,10 @@ import { ArrowRight } from "lucide-react";
 import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
 
-export default function CTASection() {
+export default function CTASection({
+  Heading = "Switch to Solar Energy Today",
+  paragraph = "Join thousands of homeowners and businesses already saving with clean, renewable energy.",
+}) {
   const { theme } = useTheme();
 
   return (
@@ -16,13 +19,12 @@ export default function CTASection() {
         <h2
           className={`text-5xl font-bold mb-6 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
         >
-          Switch to Solar Energy Today
+          {Heading}
         </h2>
         <p
           className={`mb-8 text-lg ${theme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
         >
-          Join thousands of homeowners and businesses already saving with clean,
-          renewable energy.
+          {paragraph}
         </p>
         <Button className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-lg group">
           Get Started Now

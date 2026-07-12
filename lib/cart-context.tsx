@@ -1,102 +1,182 @@
-'use client'
+"use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { useAuth } from './auth-context'
-import axios from 'axios'
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./auth-context";
+import axios from "axios";
+import { BEendpoints } from "@/constants/urls/backendUrls";
+import { toast } from "sonner";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000'
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 export interface CartItem {
-  id: string
-  name: string
-  price: number
-  image: string
-  quantity: number
-  specs?: string
-  category: string
+  id: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  quantity: number;
+  specs?: string;
+  category: string;
 }
 
 interface CartContextType {
-  items: CartItem[]
-  addItem: (item: CartItem) => void
-  removeItem: (itemId: string) => void
-  updateQuantity: (itemId: string, quantity: number) => void
-  clearCart: () => void
-  total: number
-  itemCount: number
-  syncWithBackend: () => Promise<void>
+  items: CartItem[];
+  addItem: (item: CartItem) => void;
+  removeItem: (itemId: string) => void;
+  updateQuantity: (itemId: string, quantity: number) => void;
+  clearCart: () => void;
+  submitOrder: ({
+    name,
+    email,
+    phoneNumber,
+    streetAddress,
+    city,
+    state,
+    zipCode,
+  }: {
+    name: string;
+    email: string;
+    phoneNumber: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    zipCode?: string;
+  }) => void;
+  total: number;
+  itemCount: number;
+  syncWithBackend: () => Promise<void>;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined)
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([])
-  const { user, isAuthenticated } = useAuth()
+  const [items, setItems] = useState<CartItem[]>([]);
+  const { user, isAuthenticated } = useAuth();
 
   // Initialize cart from localStorage
   useEffect(() => {
-    try {
-      const storedCart = localStorage.getItem('cart')
-      if (storedCart) {
-        setItems(JSON.parse(storedCart))
+    const initializeCart = async () => {
+      console.log("stop 1");
+      console.log("user", user);
+      if (!user) return;
+      console.log("stop 2");
+
+      try {
+        const res = await axios.get(BEendpoints.get_cart_items(user?.id));
+        if (res.data.ok) setItems(res.data.data);
+        else throw new Error(res.data.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          toast.error(err.message || "Failed to initialize cart");
+        }
       }
-    } catch (error) {
-      console.error('[v0] Cart initialization error:', error)
-      localStorage.removeItem('cart')
-    }
-  }, [])
+    };
+    initializeCart();
+  }, [user]);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(items))
-  }, [items])
+    localStorage.setItem("cart", JSON.stringify(items));
+  }, [items]);
 
-  const addItem = (newItem: CartItem) => {
+  const addItem = async (newItem: CartItem) => {
+    if (!user) throw new Error("User must be logged in");
+
+    try {
+      //adding item on DB
+      const res = await axios.post(BEendpoints.add_to_cart, {
+        productId: newItem.id,
+        userId: user.id,
+        quantity: newItem.quantity,
+      });
+      if (res.data.ok) toast.success("Added to cart");
+      else throw new Error("Failed to update cart");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed");
+      return;
+    }
     setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === newItem.id && item.specs === newItem.specs)
+      const existingItem = prevItems.find((item) => item.id === newItem.id);
 
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === newItem.id && item.specs === newItem.specs
+          item.id === newItem.id
             ? { ...item, quantity: item.quantity + newItem.quantity }
-            : item
-        )
+            : item,
+        );
       }
 
-      return [...prevItems, newItem]
-    })
-  }
+      return [...prevItems, newItem];
+    });
+  };
 
-  const removeItem = (itemId: string) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId))
-  }
+  const removeItem = async (itemId: string) => {
+    if (!user!.id) return;
 
-  const updateQuantity = (itemId: string, quantity: number) => {
+    try {
+      const res = await axios.delete(
+        BEendpoints.delete_cart_item(user!.id, itemId),
+      );
+      if (res.data.ok) toast.success("Item deleted successfully");
+      else throw new Error("Failed to update cart");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "couldn't delete item");
+      return;
+    }
+    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  };
+
+  const updateQuantity = async (itemId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeItem(itemId)
-      return
+      removeItem(itemId);
+      return;
+    }
+    if (!user) return;
+
+    try {
+      const res = await axios.patch(
+        BEendpoints.update_cart_item(user?.id, itemId, quantity),
+      );
+    } catch (err) {
+      return;
     }
 
     setItems((prevItems) =>
-      prevItems.map((item) => (item.id === itemId ? { ...item, quantity } : item))
-    )
-  }
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, quantity } : item,
+      ),
+    );
+  };
 
-  const clearCart = () => {
-    setItems([])
-    localStorage.removeItem('cart')
-  }
+  const clearCart = async () => {
+    if (!user) return;
+    try {
+      const res = await axios.delete(BEendpoints.clear_cart(user.id));
+      if (res.data.ok) toast.success("Cleared cart succesfully");
+      else throw new Error("Failed to update cart");
+    } catch (err) {
+      return toast.error(
+        err instanceof Error ? err.message : "couldn't clear cart",
+      );
+    }
+    setItems([]);
+  };
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+
+  const submitOrder = async () => {};
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const syncWithBackend = async () => {
     if (!isAuthenticated || !user) {
-      throw new Error('User must be authenticated to sync cart')
+      throw new Error("User must be authenticated to sync cart");
     }
 
     try {
-      const token = localStorage.getItem('auth_token')
+      const token = localStorage.getItem("auth_token");
       await axios.post(
         `${API_BASE_URL}/api/cart/sync`,
         { items },
@@ -104,32 +184,33 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
-      )
+        },
+      );
     } catch (error: any) {
-      console.error('[v0] Cart sync error:', error)
-      throw error
+      console.error("[v0] Cart sync error:", error);
+      throw error;
     }
-  }
+  };
 
   const value: CartContextType = {
     items,
     addItem,
     removeItem,
+    submitOrder,
     updateQuantity,
     clearCart,
     total,
     itemCount,
     syncWithBackend,
-  }
+  };
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {
-  const context = useContext(CartContext)
+  const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error('useCart must be used within a CartProvider')
+    throw new Error("useCart must be used within a CartProvider");
   }
-  return context
+  return context;
 }

@@ -4,14 +4,17 @@ import { Button } from "./button";
 import { ShoppingCart, Star } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
 
 const ProductCard = ({ product }: { product: ProductTypes }) => {
   const [showView, setShowView] = useState(false);
   const router = useRouter();
+  const { resolvedTheme } = useTheme();
   return (
     <div
       key={product.id}
-      className="group p-6 rounded-2xl bg-gradient-to-br h-130 from-zinc-800/40 to-zinc-900/40 border border-zinc-700/30 hover:border-amber-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/10"
+      className={`group p-6 rounded-2xl h-130 hover:shadow-md transition-all duration-300 hover:shadow-amber-400/10 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.backgroundPrimary}`}
     >
       {/* Product Image Placeholder */}
       <Image
@@ -44,7 +47,9 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
           </div>
 
           {/* Product Name */}
-          <h3 className="font-bold text-lg mb-2 group-hover:text-amber-400 transition-colors">
+          <h3
+            className={`font-bold text-lg mb-2 group-hover:text-amber-400 transition-colors line-clamp-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+          >
             {product.name}
           </h3>
 
@@ -59,7 +64,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
           <div>
             <p className="text-xs text-zinc-500">Starting at</p>
             <p className="text-2xl font-bold text-amber-400">
-              ${product.price}
+              ${product.price.toLocaleString()}
             </p>
           </div>
           <div

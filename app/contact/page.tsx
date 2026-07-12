@@ -5,8 +5,11 @@ import Navigation from "@/components/header";
 import Footer from "@/components/footer";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import { themePalette } from "@/lib/palette";
 
 export default function Contact() {
+  const { resolvedTheme } = useTheme();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -62,11 +65,13 @@ export default function Contact() {
   ];
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
+    <main
+      className={`min-h-screen text-white ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+    >
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 px-6 md:px-8 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+      <section className="relative pt-32 pb-16 px-6 md:px-8">
         <div className="absolute inset-0">
           <div className="absolute top-20 -left-32 w-80 h-80 bg-amber-400/5 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-cyan-400/5 rounded-full blur-3xl"></div>
@@ -74,7 +79,11 @@ export default function Contact() {
 
         <div className="relative z-10 max-w-6xl mx-auto">
           <h1 className="text-center text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            <span className="block mb-2">Get in</span>
+            <span
+              className={`block mb-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+            >
+              Get in
+            </span>
             <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
               Touch
             </span>
@@ -88,7 +97,9 @@ export default function Contact() {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="px-6 md:px-8 py-20 bg-zinc-950">
+      <section
+        className={`px-6 md:px-8 py-20 ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+      >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-6 mb-16">
             {contactInfo.map((info) => {
@@ -96,10 +107,14 @@ export default function Contact() {
               return (
                 <div
                   key={info.label}
-                  className="p-6 rounded-2xl bg-gradient-to-br from-zinc-800/40 to-zinc-900/40 border border-zinc-700/30 backdrop-blur-sm hover:border-amber-400/50 transition-all duration-300"
+                  className={`p-6 rounded-2xl hover:border-amber-400/50 transition-all duration-300 ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
                 >
                   <Icon className="w-8 h-8 text-amber-400 mb-4" />
-                  <h3 className="font-bold mb-2">{info.label}</h3>
+                  <h3
+                    className={`font-bold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                  >
+                    {info.label}
+                  </h3>
                   <p className="text-sm text-amber-300 font-semibold mb-2">
                     {info.value}
                   </p>
@@ -112,16 +127,24 @@ export default function Contact() {
       </section>
 
       {/* Contact Form & Map */}
-      <section className="px-6 md:px-8 py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
+      <section
+        className={`px-6 md:px-8 py-20 ${resolvedTheme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
+      >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Form */}
             <div>
-              <h2 className="text-3xl font-bold mb-8">Send us a Message</h2>
+              <h2
+                className={`text-3xl font-bold mb-8 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+              >
+                Send us a Message
+              </h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Full Name
+                  <label
+                    className={`block text-sm font-medium mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                  >
+                    Full Name <span className="text-red-500"> *</span>
                   </label>
                   <input
                     type="text"
@@ -129,14 +152,16 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 focus:border-amber-400/50 outline-none transition-colors text-white"
+                    className={`w-full px-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                     placeholder="John Doe"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Email Address
+                  <label
+                    className={`block text-sm font-medium mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                  >
+                    Email Address<span className="text-red-500"> *</span>
                   </label>
                   <input
                     type="email"
@@ -144,35 +169,39 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 focus:border-amber-400/50 outline-none transition-colors text-white"
+                    className={`w-full px-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                     placeholder="john@example.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Phone Number
+                  <label
+                    className={`block text-sm font-medium mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                  >
+                    Phone Number <span className="text-red-500"> *</span>
                   </label>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 focus:border-amber-400/50 outline-none transition-colors text-white"
+                    className={`w-full px-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                     placeholder="(555) 123-4567"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Subject
+                  <label
+                    className={`block text-sm font-medium mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                  >
+                    Subject <span className="text-red-500"> *</span>
                   </label>
                   <select
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 focus:border-amber-400/50 outline-none transition-colors text-white"
+                    className={`w-full px-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   >
                     <option value="">Select a subject</option>
                     <option value="residential">Residential Solar</option>
@@ -183,7 +212,9 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
+                  <label
+                    className={`block text-sm font-medium mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                  >
                     Message
                   </label>
                   <textarea
@@ -192,7 +223,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 focus:border-amber-400/50 outline-none transition-colors text-white resize-none"
+                    className={`w-full px-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                     placeholder="Tell us about your project..."
                   />
                 </div>
@@ -206,11 +237,15 @@ export default function Contact() {
             {/* Info & Map Placeholder */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold mb-4">
-                  We&apos;re Located Across the Region
+                <h3
+                  className={`text-2xl font-bold mb-4 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
+                  Our Office is situated at:
                 </h3>
-                <p className="text-zinc-400 mb-6">
-                  With multiple installation hubs and local teams, SolarBloom
+                <p
+                  className={`mb-6 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+                >
+                  With multiple installation hubs and local teams, GR-Tech
                   serves customers throughout the region. Contact your nearest
                   office for personalized service.
                 </p>
@@ -262,10 +297,14 @@ export default function Contact() {
       {/* CTA Section */}
       <section className="px-6 md:px-8 py-20 bg-gradient-to-br from-amber-600/20 to-amber-700/10 border-t border-amber-500/20">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2
+            className={`text-4xl md:text-5xl font-bold mb-6 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+          >
             Can&apos;t Wait to Start?
           </h2>
-          <p className="text-zinc-300 text-lg mb-8">
+          <p
+            className={`text-lg mb-8 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
+          >
             Schedule a free consultation and get your solar journey started
             today.
           </p>

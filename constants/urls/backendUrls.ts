@@ -14,10 +14,20 @@ const EPs = {
   logout: `${backendUrl}/api/auth/logout`,
   get_products: (limit?: number) => `${backendUrl}/api/products?limit=${limit}`,
   get_single_product: (id: string) => `${backendUrl}/api/products/${id}`,
+  add_to_cart: `${backendUrl}/api/cart/add`,
+  get_cart_items: (userId: string) => `${backendUrl}/api/cart/getAll/${userId}`, // flag  /cart/getAll/:userId
+  delete_cart_item: (userId: string, productId: string) =>
+    `${backendUrl}/api/cart/delete/${userId}/${productId}`,
+  update_cart_item: (userId: string, productId: string, quantity: number) =>
+    `${backendUrl}/api/cart/update/${userId}/${productId}/${quantity}`,
+  clear_cart: (userId: string) => `${backendUrl}/api/cart/clearCart/${userId}`,
+  submit_order: (userId: string) =>
+    `${backendUrl}/api/cart/submitOrder/${userId}`,
 };
 
 type BEendpointTypes = typeof EPs;
 
+//intercepts file read for EPs variable to perform stipulated operation
 export const BEendpoints = new Proxy(EPs, {
   get(target, prop: keyof typeof EPs) {
     const value = target[prop];
