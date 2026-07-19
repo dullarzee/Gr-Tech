@@ -5,6 +5,7 @@ import { useAuth } from "./auth-context";
 import axios from "axios";
 import { BEendpoints } from "@/constants/urls/backendUrls";
 import { toast } from "sonner";
+import { ProductTypes } from "@/types";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
@@ -19,29 +20,28 @@ export interface CartItem {
   category: string;
 }
 
+interface SubmitOrderFieldsTypes {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zipCode?: string;
+  products: Omit<
+    ProductTypes,
+    "stock" | "ratings" | "reviews" | "features" | "description"
+  >[];
+}
+
 interface CartContextType {
   items: CartItem[];
+  setItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
   addItem: (item: CartItem) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
-  submitOrder: ({
-    name,
-    email,
-    phoneNumber,
-    streetAddress,
-    city,
-    state,
-    zipCode,
-  }: {
-    name: string;
-    email: string;
-    phoneNumber: string;
-    streetAddress: string;
-    city: string;
-    state: string;
-    zipCode?: string;
-  }) => void;
+  submitOrder: (details: SubmitOrderFieldsTypes) => Promise<boolean>;
   total: number;
   itemCount: number;
   syncWithBackend: () => Promise<void>;
@@ -92,7 +92,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (res.data.ok) toast.success("Added to cart");
       else throw new Error("Failed to update cart");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed");
+      toast.error("Failed to update cart");
       return;
     }
     setItems((prevItems) => {
@@ -167,7 +167,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     0,
   );
 
-  const submitOrder = async () => {};
+  const submitOrder = async (
+    details: SubmitOrderFieldsTypes,
+  ): Promise<boolean> => {
+    if (!user) return false;
+    try {
+      const res = await axios.post(BEendpoints.submit_order(user.id), details);
+      if (!res.data.ok)
+        throw new Error(res.data.message || "Couldn't submit order");
+
+      toast.success("Submitted Order");
+      return true;
+    } catch (err) {
+      toast.error("Failed to submit order");
+      return false;
+    }
+  };
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const syncWithBackend = async () => {
@@ -194,6 +209,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const value: CartContextType = {
     items,
+    setItems,
     addItem,
     removeItem,
     submitOrder,

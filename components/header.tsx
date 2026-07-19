@@ -23,7 +23,7 @@ export default function Navigation() {
 
   const router = useRouter();
   const { user, isAuthenticated, logout } = useAuth();
-  const { items } = useCart();
+  const { items, setItems } = useCart();
 
   const links = [
     { name: "home", path: "/" },
@@ -52,6 +52,7 @@ export default function Navigation() {
 
   const handleLogout = () => {
     logout();
+    setItems([]);
     setShowMobileMenu(false);
     router.push("/");
   };

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 
 export default function FAQSection() {
   const { theme } = useTheme();
@@ -42,7 +43,15 @@ export default function FAQSection() {
       className={`py-20 px-6 border-y ${theme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
     >
       <div className="max-w-3xl mx-auto">
-        <p className="text-xs text-amber-400 font-semibold mb-3">FAQ</p>
+        <motion.p
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="text-xs text-amber-400 font-semibold mb-3"
+        >
+          FAQ
+        </motion.p>
         <h2
           className={`text-4xl font-bold mb-12 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
         >
@@ -51,15 +60,19 @@ export default function FAQSection() {
 
         <div className="space-y-3">
           {faqs.map((faq, idx) => (
-            <div
+            <motion.div
               key={idx}
+              initial={{ x: -300 }}
+              whileInView={{ x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
               className={`p-6 rounded-xl border hover:border-amber-400/20 transition-all cursor-pointer ${theme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
               onClick={() => setExpandedIdx(expandedIdx === idx ? null : idx)}
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-lg flex-1">{faq.question}</h3>
                 <ChevronDown
-                  className={`w-5 h-5 text-amber-400 transition-transform flex-shrink-0 ${
+                  className={`w-5 h-5 text-amber-400 transition-transform shrink-0 ${
                     expandedIdx === idx ? "rotate-180" : ""
                   }`}
                 />
@@ -69,7 +82,7 @@ export default function FAQSection() {
                   {faq.answer}
                 </p>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

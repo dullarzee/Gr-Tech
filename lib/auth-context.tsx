@@ -5,6 +5,8 @@ import axios from "axios";
 import { BEendpoints } from "@/constants/urls/backendUrls";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useSharedContext } from "@/components/ui/sharedContextProvider";
+//import { useCart } from "./cart-context";
 
 interface User {
   id: string;
@@ -22,6 +24,7 @@ interface AuthContextType {
     email: string,
     password: string,
     name: string,
+    phoneNumber: string,
   ) => Promise<boolean | undefined>;
   logout: () => void;
   updateUser: (user: User) => void;
@@ -84,7 +87,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const register = async (email: string, password: string, name: string) => {
+  const register = async (
+    email: string,
+    password: string,
+    name: string,
+    phoneNumber: string,
+  ) => {
     try {
       setLoading(true);
       const res = await axios.post(
@@ -93,6 +101,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           name,
           email,
           password,
+          phoneNumber,
         },
         { withCredentials: true },
       );

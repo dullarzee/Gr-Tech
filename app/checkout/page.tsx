@@ -167,16 +167,19 @@ export default function CheckoutPage() {
     setLoading(true);
 
     try {
-      submitOrder({
+      const isSuccess = await submitOrder({
         name: formData.fullName,
         email: formData.email,
         phoneNumber: formData.phone,
         streetAddress: formData.street,
         city: formData.city,
         state: formData.state,
+        products: items,
       });
-      setOrderPlaced(true);
-      clearCart();
+      if (isSuccess) {
+        setOrderPlaced(true);
+        clearCart();
+      }
     } catch (error) {
       console.error("[v0] Checkout error:", error);
     } finally {
@@ -247,7 +250,7 @@ export default function CheckoutPage() {
                 Total:
               </span>
               <span className="text-2xl font-bold text-amber-400">
-                ${(total * 1.1).toLocaleString()}
+                ${total.toLocaleString()}
               </span>
             </div>
           </div>
@@ -257,7 +260,7 @@ export default function CheckoutPage() {
             <div
               className={`rounded-xl p-4 flex items-start gap-3 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
             >
-              <Truck className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
+              <Truck className="w-6 h-6 text-amber-400 shrink-0 mt-1" />
               <div>
                 <p
                   className={`font-semibold ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
@@ -558,8 +561,9 @@ export default function CheckoutPage() {
                         Qty: {item.quantity}
                       </p>
                     </div>
-                    <p className="font-semibold">
-                      ${(item.price * item.quantity).toLocaleString()}
+                    <p className="font-bold">
+                      <span className="text-xs">₦</span>
+                      {(item.price * item.quantity).toLocaleString()}
                     </p>
                   </div>
                 ))}
@@ -570,26 +574,29 @@ export default function CheckoutPage() {
                 <div className="flex justify-between">
                   <span className="text-zinc-400">Subtotal</span>
                   <span className="font-semibold">
-                    ${total.toLocaleString()}
+                    <span className="text-xs">₦</span>
+                    {total.toLocaleString()}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-zinc-400">Shipping</span>
                   <span className="font-semibold text-emerald-400">Free</span>
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <span className="text-zinc-400">Tax (est.)</span>
                   <span className="font-semibold">
-                    ${(total * 0.1).toLocaleString()}
+                    <span className="text-x">₦</span>
+                    {(total * 0.1).toLocaleString()}
                   </span>
-                </div>
+                </div> */}
               </div>
 
               {/* Total */}
               <div className="flex justify-between items-center">
                 <span className="text-lg font-bold">Total:</span>
                 <span className="text-2xl font-bold text-amber-400">
-                  ${(total * 1.1).toLocaleString()}
+                  <span className="text-xs">₦</span>
+                  {total.toLocaleString()}
                 </span>
               </div>
 

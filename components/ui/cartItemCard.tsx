@@ -22,15 +22,15 @@ export default function CartItemCard({ item }: { item: CartItem }) {
     <>
       <div
         key={item.id}
-        className={`border rounded-2xl p-4 md:p-6 flex flex-col sm:flex-row gap-4 md:gap-6 ${resolvedTheme === "dark" ? `${themePalette.dark.chip_style} border-zinc-700/50` : `${themePalette.light.chip_style} border-zinc-400/50`}`}
+        className={`border rounded-2xl p-4 md:p-6 flex flex-col sm:flex-row gap-4 md:gap-6 max-w-full ${resolvedTheme === "dark" ? `${themePalette.dark.chip_style} border-zinc-700/50` : `${themePalette.light.chip_style} border-zinc-400/50`}`}
       >
         {/* Product Image */}
-        <div className="w-full sm:w-24 md:w-32 h-32 sm:h-24 md:h-32 bg-zinc-700/30 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div className="w-full max-w-screen sm:w-24 md:w-32 h-32 sm:h-24 md:h-32 bg-zinc-700/30 rounded-lg flex items-center justify-center shrink-0">
           <Image
             alt={`Image of ${item.name}`}
             src={item.imageUrl}
-            width={100}
-            height={100}
+            width={50}
+            height={50}
             className="w-full h-full"
             loading="eager"
           />
@@ -39,7 +39,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
         {/* Product Info */}
         <div className="flex-1 min-w-0">
           <div className="mb-3">
-            <h3 className="text-lg md:text-xl font-bold mb-1 truncate">
+            <h3 className="text-lg md:text-xl font-bold mb-1 line-clamp-1">
               {item.name}
             </h3>
             <p className="text-sm text-zinc-400">{item.specs}</p>
@@ -99,7 +99,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
         {/* Remove Button */}
         <button
           onClick={() => removeItem(item.id)}
-          className="flex-shrink-0 w-10 h-10 flex items-center justify-center text-red-400 hover:text-red-300 transition-colors"
+          className="shrink-0 w-10 h-10 flex items-center justify-center text-red-400 hover:text-red-300 transition-colors"
         >
           <Trash2 className="w-5 h-5" />
         </button>

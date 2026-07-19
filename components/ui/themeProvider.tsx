@@ -37,14 +37,14 @@ export default function ThemeProvider({
   if (!isMounted) {
     return (
       <ScreenLoader
-        message="Loading App"
+        message="Loading..."
         Image={
           <Image
             alt="Gr tech logo"
             src="/images/gr-tech-bgless-logo.png"
             width={65}
             height={65}
-            className="w-40"
+            className="w-full"
           />
         }
       />

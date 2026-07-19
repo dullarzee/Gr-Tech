@@ -12,14 +12,17 @@ import { toast } from "sonner";
 import ProductCard from "@/components/ui/productCard";
 import { useTheme } from "next-themes";
 import { themePalette } from "@/lib/palette";
+import { useRouter } from "next/navigation";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState("popular");
   const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(10);
   const { resolvedTheme } = useTheme();
 
+  const router = useRouter();
   const categories = [
     { id: "all", name: "All Products" },
     { id: "solarpanel", name: "Solar Panels" },
@@ -40,7 +43,7 @@ export default function ProductsPage() {
     async function fetchProducts() {
       try {
         setLoading(true);
-        const res = await axios.get(BEendpoints.get_products());
+        const res = await axios.get(BEendpoints.get_products(limit, sortBy));
         console.log(res.data);
         if (res.data.ok) setProducts(res.data.data);
         else throw new Error("failed to fetch products");
@@ -54,7 +57,7 @@ export default function ProductsPage() {
       }
     }
     fetchProducts();
-  }, []);
+  }, [sortBy]);
 
   const filteredProducts: ProductTypes[] =
     selectedCategory === "all"
@@ -150,7 +153,10 @@ export default function ProductsPage() {
                       Our solar experts are ready to help you choose the perfect
                       products for your system.
                     </p>
-                    <Button className="w-full bg-amber-400 text-zinc-950 hover:bg-amber-300 text-sm font-semibold">
+                    <Button
+                      onClick={() => router.push("/contact")}
+                      className="w-full bg-amber-400 text-zinc-950 hover:bg-amber-300 text-sm font-semibold"
+                    >
                       Consult an Expert
                     </Button>
                   </div>
@@ -161,7 +167,7 @@ export default function ProductsPage() {
               <div className="lg:col-span-3">
                 <div className="flex justify-between items-center mb-8">
                   <p className="text-sm text-zinc-400">
-                    Showing {filteredProducts.length} products
+                    Showing {filteredProducts?.length} products
                   </p>
                 </div>
 
@@ -174,10 +180,20 @@ export default function ProductsPage() {
                   </div>
                 ) : (
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredProducts.map((product) => (
+                    {filteredProducts?.map((product) => (
                       <ProductCard key={product.id} product={product} />
                     ))}
                   </div>
+                )}
+                {!loading && (
+                  <section className="flex items-center justify-center p-6 mt-15 col-span-3">
+                    <Button
+                      onClick={() => setLimit((prev) => prev + 10)}
+                      className="bg-amber-400"
+                    >
+                      Show more
+                    </Button>
+                  </section>
                 )}
               </div>
             </div>
@@ -197,11 +213,15 @@ export default function ProductsPage() {
               solar experts.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-amber-400 text-zinc-950 hover:bg-amber-300 font-semibold px-8 py-6">
+              <Button
+                onClick={() => router.push("/services")}
+                className="bg-amber-400 text-zinc-950 hover:bg-amber-300 font-semibold px-8 py-6"
+              >
                 Build Your System
               </Button>
               <Button
                 variant="outline"
+                onClick={() => router.push("/contact")}
                 className={`hover:font-semibold px-8 py-6 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg + themePalette.dark.text_light : themePalette.light.translucent_bg + themePalette.light.text_dark}`}
               >
                 Schedule Consultation

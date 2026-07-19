@@ -6,15 +6,19 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { themePalette } from "@/lib/palette";
+import { motion } from "framer-motion";
 
 const ProductCard = ({ product }: { product: ProductTypes }) => {
   const [showView, setShowView] = useState(false);
   const router = useRouter();
   const { resolvedTheme } = useTheme();
   return (
-    <div
+    <motion.div
       key={product.id}
-      className={`group p-6 rounded-2xl h-130 hover:shadow-md transition-all duration-300 hover:shadow-amber-400/10 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.backgroundPrimary}`}
+      initial={{ scale: 1 }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.15 }}
+      className={`group p-6 rounded-2xl h-130 hover:shadow-md hover:shadow-amber-400/10 ease-in-out ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.backgroundPrimary}`}
     >
       {/* Product Image Placeholder */}
       <Image
@@ -22,7 +26,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
         src={product.imageUrl}
         width={200}
         height={200}
-        className="w-full h-48 rounded-lg bg-gradient-to-br from-zinc-700/50 to-zinc-800/50 flex items-center justify-center mb-4 text-5xl"
+        className="w-full h-48 rounded-lg bg-linear-to-br from-zinc-700/50 to-zinc-800/50 flex items-center justify-center mb-4 text-5xl"
       />
 
       <section className="flex flex-col justify-between h-[57%]">
@@ -74,7 +78,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
             <Button
               onMouseOver={() => setShowView(true)}
               onMouseOut={() => setShowView(false)}
-              className={`bg-amber-400 text-zinc-950 p-3 rounded-lg w-12 transition duration-300 ${showView ? "bg-white" : "bg-amber-400"}`}
+              className={`bg-amber-400 text-zinc-950 p-3 rounded-lg w-12 transition duration-300 cursor-pointer ${showView ? "bg-white" : "bg-amber-400"}`}
             >
               {!showView ? (
                 <ShoppingCart className="w-5 h-5" />
@@ -85,7 +89,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

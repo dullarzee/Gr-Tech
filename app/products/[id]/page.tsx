@@ -295,24 +295,25 @@ export default function ProductDetailPage() {
 
         {/* Features Section */}
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
-          {/* Features */}
-          <div
-            className={`rounded-2xl p-6 md:p-8 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
-          >
-            <h3
-              className={`text-xl font-bold mb-6 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+          {!(product.features.length === 0) && (
+            <div
+              className={`rounded-2xl p-6 md:p-8 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
             >
-              Features & Specifications
-            </h3>
-            <ul className="space-y-3">
-              {product.features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-zinc-300">{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+              <h3
+                className={`text-xl font-bold mb-6 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+              >
+                Features & Specifications
+              </h3>
+              <ul className="space-y-3">
+                {product.features.map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-zinc-300">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Additional Info */}
           <div className="space-y-4">
@@ -344,18 +345,18 @@ export default function ProductDetailPage() {
                 <h4
                   className={`font-semibold mb-1 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
                 >
-                  Fast Shipping
+                  Fast Delivery
                 </h4>
                 <p
                   className={`text-sm ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
                 >
-                  Free shipping on orders over $500
+                  After order confirmation, delivery ASAP
                 </p>
               </div>
             </div>
 
             {/* Returns */}
-            <div
+            {/* <div
               className={`rounded-2xl p-6 flex items-start gap-4 ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
             >
               <RotateCcw className="w-8 h-8 text-blue-400 flex-shrink-0" />
@@ -371,7 +372,7 @@ export default function ProductDetailPage() {
                   30-day money-back guarantee
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {/* Support */}
             <div

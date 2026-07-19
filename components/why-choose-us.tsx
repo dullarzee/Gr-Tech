@@ -3,6 +3,7 @@
 import { Award, Zap, Users, TrendingUp } from "lucide-react";
 import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 
 export default function WhyChooseUs() {
   const { theme } = useTheme();
@@ -16,12 +17,17 @@ export default function WhyChooseUs() {
 
   return (
     <section
-      className={`py-20 px-6 bg-gradient-to-br lg:bg-gradient-to-r ${theme === "dark" ? "from-zinc-900 to-emerald-950/30" : "from-zinc-100 via-zinc-100 via-65% to-emerald-100"}`}
+      className={`py-20 px-6 bg-linear-to-br lg:bg-linear-to-r ${theme === "dark" ? "from-zinc-900 to-emerald-950/30" : "from-zinc-100 via-zinc-100 via-65% to-emerald-100"}`}
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left content */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <p className="text-xs text-amber-400 font-semibold mb-3">Quality</p>
             <h2
               className={`text-4xl font-bold mb-8 ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
@@ -44,10 +50,16 @@ export default function WhyChooseUs() {
                 );
               })}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Right - Image placeholder */}
-          <div className="relative h-96 rounded-2xl bg-gradient-to-br from-zinc-800/50 to-emerald-900/30 border border-emerald-500/20 overflow-hidden flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="relative h-96 rounded-2xl bg-linear-to-br from-zinc-800/50 to-emerald-900/30 border border-emerald-500/20 overflow-hidden flex items-center justify-center"
+          >
             <div className="text-center">
               <svg
                 className="w-32 h-32 mx-auto text-emerald-400/30 mb-4"
@@ -64,7 +76,7 @@ export default function WhyChooseUs() {
               </svg>
               <p className="text-zinc-500 text-sm">Solar Technology Stack</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

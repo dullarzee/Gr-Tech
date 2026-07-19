@@ -55,7 +55,7 @@ export default function CartPage() {
 
   return (
     <div
-      className={`min-h-screen pt-20 ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+      className={`min-h-screen max-w-screen pt-20 ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
     >
       <Header />
       {/* Breadcrumb */}
@@ -127,7 +127,7 @@ export default function CartPage() {
         ) : (
           <div className="grid md:grid-cols-3 gap-8 md:gap-12 ">
             {/* Cart Items */}
-            <div className="md:col-span-2 space-y-4 px-4 md:px-auto">
+            <div className="w-full md:col-span-2 space-y-4 md:px-auto">
               {items.map((item) => (
                 <CartItemCard key={item.id} item={item} />
               ))}
@@ -170,7 +170,7 @@ export default function CartPage() {
                     <span className="text-zinc-400">Shipping</span>
                     <span className="font-semibold text-emerald-400">Free</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  {/* <div className="flex justify-between text-sm">
                     <span
                       className={`text-zinc-400 ${resolvedTheme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
                     >
@@ -182,7 +182,7 @@ export default function CartPage() {
                       <span className="text-sm">&#8358;</span>
                       {(total * 0.1).toLocaleString()}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Total */}
@@ -194,7 +194,7 @@ export default function CartPage() {
                   </span>
                   <span className="text-2xl md:text-3xl font-bold text-amber-400">
                     <span className="text-sm">&#8358;</span>
-                    {(total * 1.1).toLocaleString()}
+                    {total.toLocaleString()}
                   </span>
                 </div>
 

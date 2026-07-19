@@ -7,13 +7,18 @@ export const backendUrl =
   environment === "dev" ? "http://localhost:8080" : "https://grtech.vercel.app";
 
 const EPs = {
-  get_users: `${backendUrl}/api/auth/getAllUsers`,
+  get_users: `${backendUrl}/api/auth/users`,
   register_user: `${backendUrl}/api/auth/register`,
   login_user: `${backendUrl}/api/auth/login`,
   check_user_auth_status: `${backendUrl}/api/auth/checkAuth`,
   logout: `${backendUrl}/api/auth/logout`,
-  get_products: (limit?: number) => `${backendUrl}/api/products?limit=${limit}`,
+  get_products: (limit?: number, sortBy?: string) =>
+    `${backendUrl}/api/products?limit=${limit}&sortBy=${sortBy}`,
   get_single_product: (id: string) => `${backendUrl}/api/products/${id}`,
+  add_product: `${backendUrl}/api/products`,
+  update_product: (id: string) => `${backendUrl}/api/products/${id}`,
+  delete_product: (id: string) => `${backendUrl}/api/products/${id}`,
+  upload_product_image: `${backendUrl}/api/products/upload-image`,
   add_to_cart: `${backendUrl}/api/cart/add`,
   get_cart_items: (userId: string) => `${backendUrl}/api/cart/getAll/${userId}`, // flag  /cart/getAll/:userId
   delete_cart_item: (userId: string, productId: string) =>
@@ -22,7 +27,10 @@ const EPs = {
     `${backendUrl}/api/cart/update/${userId}/${productId}/${quantity}`,
   clear_cart: (userId: string) => `${backendUrl}/api/cart/clearCart/${userId}`,
   submit_order: (userId: string) =>
-    `${backendUrl}/api/cart/submitOrder/${userId}`,
+    `${backendUrl}/api/orders/submitOrder/${userId}`,
+  get_orders: `${backendUrl}/api/orders`,
+  delete_order: (id: string) => `${backendUrl}/api/orders/delete/${id}`,
+  delete_user: (id: string) => `${backendUrl}/api/auth/${id}`,
 };
 
 type BEendpointTypes = typeof EPs;

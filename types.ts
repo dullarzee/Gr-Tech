@@ -1,3 +1,5 @@
+import { CartItem } from "./lib/cart-context";
+
 export interface ProductTypes {
   id: string;
   name: string;
@@ -20,4 +22,43 @@ export interface ResourceTypes {
   readTime: number;
   date: string;
   image: string;
+}
+
+export interface FetchedUserTypes {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  createdAt: string;
+  cartItems: CartItem[];
+  order: Omit<OrderTypes, "user">[];
+  updatedAt: string;
+}
+
+export interface OrderTypes {
+  id: string;
+  userId: string;
+  totalAmount: number;
+  shippingFee?: number;
+  tax?: number;
+  status: string;
+  paymentReference?: string;
+  paymentStatus: string;
+  shippingAddress?: string;
+  phoneNumber?: string;
+  email: string;
+  items: [];
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    createdAt: string;
+    cartItems: CartItem[];
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt?: string;
 }

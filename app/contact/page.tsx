@@ -7,6 +7,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { themePalette } from "@/lib/palette";
+import { motion } from "framer-motion";
 
 export default function Contact() {
   const { resolvedTheme } = useTheme();
@@ -78,21 +79,33 @@ export default function Contact() {
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto">
-          <h1 className="text-center text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <motion.h1
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-center text-5xl md:text-7xl font-bold mb-6 leading-tight"
+          >
             <span
               className={`block mb-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
             >
               Get in
             </span>
-            <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
               Touch
             </span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-center text-zinc-400 text-lg max-w-2xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="text-center text-zinc-400 text-lg max-w-2xl mx-auto"
+          >
             Have questions? We&apos;re here to help. Reach out to our team and
             let&apos;s discuss your solar journey.
-          </p>
+          </motion.p>
         </div>
       </section>
 
@@ -102,11 +115,15 @@ export default function Contact() {
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-6 mb-16">
-            {contactInfo.map((info) => {
+            {contactInfo.map((info, idx) => {
               const Icon = info.icon;
               return (
-                <div
+                <motion.div
                   key={info.label}
+                  initial={{ opacity: 0, y: 60 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.7 * (1 + idx), ease: "easeOut" }}
                   className={`p-6 rounded-2xl hover:border-amber-400/50 transition-all duration-300 ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
                 >
                   <Icon className="w-8 h-8 text-amber-400 mb-4" />
@@ -119,7 +136,7 @@ export default function Contact() {
                     {info.value}
                   </p>
                   <p className="text-xs text-zinc-400">{info.detail}</p>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -133,7 +150,11 @@ export default function Contact() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Form */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -200 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <h2
                 className={`text-3xl font-bold mb-8 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
               >
@@ -232,10 +253,15 @@ export default function Contact() {
                   Send Message
                 </Button>
               </form>
-            </div>
+            </motion.div>
 
             {/* Info & Map Placeholder */}
-            <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: 200 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-8"
+            >
               <div>
                 <h3
                   className={`text-2xl font-bold mb-4 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
@@ -252,7 +278,7 @@ export default function Contact() {
               </div>
 
               {/* Map Placeholder */}
-              <div className="w-full h-96 rounded-2xl bg-gradient-to-br from-zinc-800/40 to-zinc-900/40 border border-zinc-700/30 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-full h-96 rounded-2xl bg-linear-to-br from-zinc-800/40 to-zinc-900/40 border border-zinc-700/30 backdrop-blur-sm flex items-center justify-center">
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-amber-400 mx-auto mb-3" />
                   <p className="text-zinc-400">Interactive map coming soon</p>
@@ -260,7 +286,7 @@ export default function Contact() {
               </div>
 
               {/* Quick Links */}
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/15 to-emerald-600/10 border border-emerald-500/30 backdrop-blur-sm">
+              <div className="p-6 rounded-2xl bg-linear-to-br from-emerald-500/15 to-emerald-600/10 border border-emerald-500/30 backdrop-blur-sm">
                 <h4 className="font-bold mb-4">Quick Links</h4>
                 <ul className="space-y-2 text-sm">
                   <li>
@@ -289,13 +315,13 @@ export default function Contact() {
                   </li>
                 </ul>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="px-6 md:px-8 py-20 bg-gradient-to-br from-amber-600/20 to-amber-700/10 border-t border-amber-500/20">
+      <section className="px-6 md:px-8 py-20 bg-linear-to-br from-amber-600/20 to-amber-700/10 border-t border-amber-500/20">
         <div className="max-w-4xl mx-auto text-center">
           <h2
             className={`text-4xl md:text-5xl font-bold mb-6 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}

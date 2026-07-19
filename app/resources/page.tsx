@@ -183,7 +183,7 @@ export default function ResourcesPage() {
             {filteredResources.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredResources.map((resource) => (
-                  <ResourceCard resource={resource} />
+                  <ResourceCard key={resource.id} resource={resource} />
                 ))}
               </div>
             ) : (

@@ -3,6 +3,7 @@
 import { Sun, Zap, Wrench } from "lucide-react";
 import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 
 export default function ServicesGrid() {
   const { theme } = useTheme();
@@ -50,22 +51,39 @@ export default function ServicesGrid() {
       className={`py-20 px-6 ${theme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
     >
       <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
-          <p className="text-xs text-amber-400 font-semibold mb-3">Services</p>
-          <h2
+        <div className="">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          >
+            <p className="text-xs text-amber-400 font-semibold mb-3">
+              Services
+            </p>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className={`text-4xl font-bold ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
           >
             Our Services
-          </h2>
+          </motion.h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 mt-2">
           {services.map((service, idx) => {
             const Icon = service.icon;
             return (
-              <div
+              <motion.div
                 key={idx}
-                className={`group p-8 rounded-2xl bg-gradient-to-br ${service.gradient} border ${service.border} backdrop-blur-md hover:border-amber-400/50 transition-all duration-300 cursor-pointer hover:translate-y-[-4px]`}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7 * (1 + idx), ease: "easeOut" }}
+                className={`group p-8 rounded-2xl bg-linear-to-br ${service.gradient} border ${service.border} backdrop-blur-md hover:border-amber-400/50 transition-all duration-300 cursor-pointer hover:-translate-y-1`}
               >
                 <div
                   className={`w-12 h-12 rounded-lg ${service.bgColor} flex items-center justify-center mb-4`}
@@ -78,7 +96,7 @@ export default function ServicesGrid() {
                 >
                   {service.description}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
         </div>

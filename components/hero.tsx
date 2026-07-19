@@ -5,6 +5,7 @@ import DotField from "./DotField";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { themePalette } from "@/lib/palette";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   const { theme } = useTheme();
@@ -47,13 +48,32 @@ export default function Hero() {
 
         {/* Main Headline */}
         <h1
-          className={`text-center text-4xl md:text-6xl lg:text-7xl font-bold mb-16 leading-tight tracking-tight ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+          className={`text-center text-4xl md:text-6xl lg:text-7xl font-bold mb-16 leading-tight tracking-tight overflow-hidden ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
         >
-          <span>Powering Tomorrow,</span>
+          <motion.span
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="inline-block"
+          >
+            Powering Tomorrow
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              ,
+            </motion.span>
+          </motion.span>
           <span>
-            <span className="bg-linear-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
+            <motion.span
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="inline-block bg-linear-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent"
+            >
               {/* ☀️  */}Today
-            </span>
+            </motion.span>
           </span>
         </h1>
 
@@ -63,7 +83,12 @@ export default function Hero() {
           <div className="space-y-4">
             {/* Environment Score Card */}
             <div className="group">
-              <div className="flex items-center justify-start mb-2">
+              <motion.div
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7 }}
+                className="flex items-center justify-start mb-2"
+              >
                 <div
                   className={`relative w-40 h-40 rounded-full ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
                 >
@@ -99,11 +124,14 @@ export default function Hero() {
                     <span className="text-2xl font-bold">99/100</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Power Savings Card */}
-            <div
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
               className={`group p-6 rounded-3xl space-y-5 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
             >
               <section>
@@ -135,11 +163,16 @@ export default function Hero() {
                   Renewable
                 </div>
               </section>
-            </div>
+            </motion.div>
           </div>
 
           {/* Center - House Visualization */}
-          <div className="relative flex items-center justify-center order-first md:order-0">
+          <motion.div
+            initial={{ scale: 0.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative flex items-center justify-center order-first md:order-0"
+          >
             <div className="relative w-full aspect-square flex items-start justify-center">
               {/* Glow effect */}
               <div className="absolute inset-0 bg-linear-to-b from-cyan-400/10 via-transparent to-transparent rounded-full blur-2xl opacity-50"></div>
@@ -158,7 +191,7 @@ export default function Hero() {
               {/* Top Right - IP68 */}
               <div className="absolute flex flex-col items-center justify-center gap-2 -top-8 mx-auto h-32">
                 <div
-                  className={`inline-flex items-center justify-center gap-2 shrink-0 px-3 py-2 rounded-full text-xs font-semibold text-cyan-300 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+                  className={`inline-flex items-center justify-center gap-2 shrink-0 px-3 py-2 rounded-full text-xs hover:scale-[1.2] transition-all duration-700 font-semibold text-cyan-300 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
                 >
                   <div className="flex items-center justify-center h-6 w-6 bg-white/20 backdrop-blur-sm rounded-full p-0.5">
                     <Droplet className="w-full text-green-400 mx-auto" />
@@ -173,7 +206,7 @@ export default function Hero() {
               {/* Left - Sun Power */}
               <div className="absolute flex items-center gap-2 top-24 -left-10 md:top-13 md:-left-8 -rotate-55 md:rotate-0 h-32 w-58">
                 <div
-                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-full text-xs ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg} ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-full text-xs hover:scale-[1.2] transition-all duration-700 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg} ${theme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
                 >
                   <div className="flex items-center justify-center h-6 w-6 bg-white/20 backdrop-blur-sm rounded-full p-0.5">
                     <Sun className="w-full text-green-400 mx-auto" />
@@ -188,7 +221,7 @@ export default function Hero() {
               <div className="absolute flex flex-col md:flex-row items-center gap-2 md:top-16 md:-right-6 md:h-32 h-60 md:w-58 mx-auto md:mx-0 bottom-0 md:bottom-auto">
                 <div className="h-full w-0.5 md:w-full bg-zinc-500 md:h-0.5 rounded-full" />
                 <div
-                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-full text-xs ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+                  className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-full text-xs hover:scale-[1.2] transition-all duration-700 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
                 >
                   <div className="flex items-center justify-center h-6 w-6 bg-white/20 backdrop-blur-sm rounded-full p-0.5">
                     <ZapIcon className="w-full text-green-400 mx-auto" />
@@ -199,12 +232,15 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column - Cards */}
           <div className="space-y-4">
             {/* Description */}
-            <div
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
               className={`p-4 flex flex-col rounded-3xl text-xs leading-relaxed text-zinc-100 ${theme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
             >
               <div className="inline-flex items-center justify-between gap-2 mb-2">
@@ -230,16 +266,21 @@ export default function Hero() {
                 your home or business. It highlights the simplicity of solar
                 technology.
               </p>
-            </div>
+            </motion.div>
 
             {/* Solar Solutions Badge */}
-            <div className="p-4 rounded-3xl bg-linear-to-br from-amber-400/15 to-amber-500/10 border border-amber-400/30 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+              className="p-4 rounded-3xl bg-linear-to-br from-amber-400/15 to-amber-500/10 border border-amber-400/30 backdrop-blur-sm"
+            >
               <div className="text-xs text-zinc-400 mb-2 uppercase tracking-wide font-semibold">
                 Latest
               </div>
               <div className="text-2xl font-bold text-amber-300 mb-1">2026</div>
               <div className="text-xs text-zinc-400">Technology</div>
-            </div>
+            </motion.div>
           </div>
         </div>
 

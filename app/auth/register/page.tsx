@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   EyeClosed,
   Eye,
+  Phone,
 } from "lucide-react";
 import { BEendpoints } from "@/constants/urls/backendUrls";
 import { useTheme } from "next-themes";
@@ -22,6 +23,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
@@ -74,7 +76,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const res = await register(email, password, name);
+      const res = await register(email, password, name, phoneNumber);
       if (res) router.push("/");
     } catch (err: any) {
       setError(err.message || "Registration failed. Please try again.");
@@ -143,6 +145,28 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Phone Number */}
+            <div>
+              <label
+                htmlFor="email"
+                className={`block text-sm font-semibold mb-2 ${resolvedTheme === "dark" ? themePalette.dark.paragraph_text_lighter : themePalette.light.paragraph_text_lighter}`}
+              >
+                Phone Number
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-3 top-3.5 w-5 h-5 text-amber-400/60" />
+                <input
+                  id="phone number"
+                  type="number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="+234 01 234 4567"
                   className={`w-full pl-10 pr-4 py-3 rounded-lg transition-colors ${resolvedTheme === "dark" ? themePalette.dark.input_bg : themePalette.light.input_bg}`}
                   required
                 />

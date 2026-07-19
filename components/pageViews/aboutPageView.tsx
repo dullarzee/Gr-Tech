@@ -6,6 +6,7 @@ import Navigation from "@/components/header";
 import Footer from "@/components/footer";
 import { Award, Users, Target, Leaf } from "lucide-react";
 import CTASection from "../cta-section";
+import { motion } from "framer-motion";
 
 const values = [
   {
@@ -80,7 +81,13 @@ export default function AboutPageView() {
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto">
-          <h1 className="text-center text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <motion.h1
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-center text-5xl md:text-7xl font-bold mb-6 leading-tight"
+          >
             <span
               className={`block mb-2 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
             >
@@ -89,19 +96,26 @@ export default function AboutPageView() {
             <span className="bg-linear-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
               GR Technologies
             </span>
-          </h1>
+          </motion.h1>
 
-          <p
+          <motion.p
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1, ease: "easeOut" }}
             className={`text-center text-zinc-400 text-lg max-w-3xl mx-auto ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
           >
             Empowering homes and businesses with clean, renewable solar energy
             solutions since 2012.
-          </p>
+          </motion.p>
         </div>
       </section>
 
       {/* Mission Statement */}
-      <section
+      <motion.section
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className={`px-6 md:px-8 py-20 ${resolvedTheme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
       >
         <div className="max-w-4xl mx-auto">
@@ -131,7 +145,7 @@ export default function AboutPageView() {
             </p>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Stats Section */}
       <section
@@ -145,8 +159,12 @@ export default function AboutPageView() {
           </h2>
 
           <div className="grid md:grid-cols-4 gap-8">
-            {stats.map((stat) => (
-              <div
+            {stats.map((stat, idx) => (
+              <motion.div
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7 * (1 + idx), ease: "easeOut" }}
                 key={stat.label}
                 className={`text-center p-6 rounded-2xl ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
               >
@@ -154,7 +172,7 @@ export default function AboutPageView() {
                   {stat.number}
                 </div>
                 <p className="text-zinc-400">{stat.label}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -172,11 +190,15 @@ export default function AboutPageView() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {values.map((value) => {
+            {values.map((value, idx) => {
               const Icon = value.icon;
               return (
-                <div
+                <motion.div
                   key={value.title}
+                  initial={{ opacity: 0, x: idx % 2 === 0 ? -60 : 60 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
                   className={`p-8 rounded-3xl hover:border-amber-400/50 transition-all duration-300 ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
                 >
                   <div className="w-12 h-12 rounded-xl bg-amber-400/20 flex items-center justify-center mb-6">
@@ -188,7 +210,7 @@ export default function AboutPageView() {
                     {value.title}
                   </h3>
                   <p className="text-zinc-400">{value.description}</p>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -213,9 +235,13 @@ export default function AboutPageView() {
           </p>
 
           <div className="grid md:grid-cols-4 gap-6">
-            {team.map((member) => (
-              <div
+            {team.map((member, idx) => (
+              <motion.div
                 key={member.name}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7 * (1 + idx), ease: "easeOut" }}
                 className={`group p-6 h-70 rounded-2xl bg-linear-to-br backdrop-blur-sm hover:border-emerald-400/60 transition-all duration-300 ${resolvedTheme === "dark" ? "from-emerald-500/15 to-emerald-600/10 border border-emerald-500/30" : "from-emerald-500/30 to-emerald-600/40 border border-emerald-500/50"}`}
               >
                 <div className="w-16 h-16 rounded-full bg-linear-to-br from-amber-400/40 to-amber-500/30 mb-4"></div>
@@ -224,7 +250,7 @@ export default function AboutPageView() {
                   {member.role}
                 </p>
                 <p className="text-sm text-zinc-400">{member.bio}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -232,10 +258,16 @@ export default function AboutPageView() {
 
       {/* CTA Section */}
 
-      <CTASection
-        Heading=" Join the Solar Revolution"
-        paragraph=" Become part of a global movement toward sustainable, clean energy."
-      />
+      <motion.div
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <CTASection
+          Heading=" Join the Solar Revolution"
+          paragraph=" Become part of a global movement toward sustainable, clean energy."
+        />
+      </motion.div>
 
       <Footer />
     </main>

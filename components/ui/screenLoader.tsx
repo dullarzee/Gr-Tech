@@ -17,12 +17,12 @@ export function ScreenLoader({
   const { theme } = useTheme();
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center transition-all duration-500 ${themePalette.dark.bg_secondary}`}
+      className={`fixed inset-0 z-9999 flex flex-col items-center justify-center transition-all duration-500 ${themePalette.dark.bg_secondary}`}
     >
       {/* Centered Logo Container */}
       <div className="relative flex flex-col items-center justify-center">
         {/* Animated Wrapper Box using our custom Tailwind utility */}
-        <div className="animate-logo-pulse pointer-events-none select-none">
+        <div className="w-40 animate-logo-pulse pointer-events-none select-none">
           {Image}
         </div>
 

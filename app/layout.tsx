@@ -8,6 +8,8 @@ import { CartProvider } from "@/lib/cart-context";
 import { Toaster } from "sonner";
 import ThemeProvider from "@/components/ui/themeProvider";
 import axios from "axios";
+import { themePalette } from "@/lib/palette";
+import { SharedContextProvider } from "@/components/ui/sharedContextProvider";
 
 export const metadata: Metadata = {
   title: "GR Tech | Solar Energy Solutions",
@@ -57,13 +59,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${notoSans.variable} bg-zinc-950`}
     >
       <body
-        className={`font-sans antialiased bg-zinc-950 text-white [&_*]:transition-colors [&_*]:ease-out  [&_*]:duration-100 ${geistMono.className}`}
+        className={`font-sans antialiased bg-zinc-950 text-white **:transition-colors **:ease-out  **:duration-100 ${geistMono.className}`}
       >
         <AuthProvider>
           <CartProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="dark"
+              defaultTheme="light"
               enableSystem={true}
               scriptProps={scriptProps}
             >
@@ -71,6 +73,7 @@ export default function RootLayout({
             </ThemeProvider>
           </CartProvider>
         </AuthProvider>
+
         <Toaster
           position="top-right"
           richColors
