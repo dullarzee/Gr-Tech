@@ -4,7 +4,9 @@ const api_key = process.env.NEXT_PUBLIC_API_KEY;
 const params = new URLSearchParams();
 params.append("apikey", api_key as string);
 export const backendUrl =
-  environment === "dev" ? "http://localhost:8080" : "https://grtech.vercel.app";
+  environment === "dev"
+    ? "http://localhost:8080"
+    : "https://gr-tech-backend.onrender.com";
 
 const EPs = {
   get_users: `${backendUrl}/api/auth/users`,
