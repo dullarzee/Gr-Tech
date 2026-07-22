@@ -44,7 +44,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const res = await axios.get(BEendpoints.check_user_auth_status, {
           withCredentials: true,
         });
-        console.log("check auth: ", res?.data);
         if (!res.data.ok) {
           setUser(null);
         } else {

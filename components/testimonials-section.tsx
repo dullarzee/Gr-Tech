@@ -8,20 +8,20 @@ export default function TestimonialsSection() {
   const { theme } = useTheme();
   const testimonials = [
     {
-      name: "John Anderson",
+      name: "Mrs Tayo",
       role: "Homeowner",
       text: "Great company! Installing their solar system was the best decision I made. We've saved so much on electricity bills!",
       rating: 5,
     },
     {
-      name: "Jane Robertson",
+      name: "Miss Onabayo",
       role: "Business Owner",
-      text: "The process was smooth and professional from start to finish. Highly recommend their services to anyone considering solar.",
+      text: "The process was smooth and professional from start to finish and there was no damage whatsoever to my roof.",
       rating: 5,
     },
     {
-      name: "Mike Thompson",
-      role: "Farmer",
+      name: "Mr Mike",
+      role: "Home owner",
       text: "Switched to solar power two years ago and couldn't be happier. Their team provided excellent support throughout.",
       rating: 5,
     },

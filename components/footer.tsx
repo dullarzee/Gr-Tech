@@ -4,6 +4,7 @@ import { Sun } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { themePalette } from "@/lib/palette";
+import Link from "next/link";
 
 export default function Footer() {
   const { theme } = useTheme();
@@ -49,24 +50,30 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-sm text-zinc-400">
               <li>
-                <a href="#" className="hover:text-amber-400 transition">
+                <Link href="/" className="hover:text-amber-400 transition">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-400 transition">
+                <Link
+                  href="/services"
+                  className="hover:text-amber-400 transition"
+                >
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-400 transition">
+                <Link href="/about" className="hover:text-amber-400 transition">
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-400 transition">
-                  Contact
-                </a>
+                <Link
+                  href="/contact"
+                  className="hover:text-amber-400 transition"
+                >
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -80,24 +87,25 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-sm text-zinc-400">
               <li>
-                <a href="#" className="hover:text-amber-400 transition">
-                  Our Team
-                </a>
+                <Link
+                  href="/products"
+                  className="hover:text-amber-400 transition"
+                >
+                  Products
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-400 transition">
-                  Careers
-                </a>
+                <Link
+                  href="/resources"
+                  className="hover:text-amber-400 transition"
+                >
+                  Resources
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-400 transition">
+                <Link href="#" className="hover:text-amber-400 transition">
                   Blog
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-amber-400 transition">
-                  Press
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

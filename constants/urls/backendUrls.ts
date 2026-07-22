@@ -31,6 +31,9 @@ const EPs = {
   get_orders: `${backendUrl}/api/orders`,
   delete_order: (id: string) => `${backendUrl}/api/orders/delete/${id}`,
   delete_user: (id: string) => `${backendUrl}/api/auth/${id}`,
+  get_user_orders: (userId: string) =>
+    `${backendUrl}/api/orders/userOrders/${userId}`,
+  send_mail: `${backendUrl}/api/contact/contactEmail`,
 };
 
 type BEendpointTypes = typeof EPs;

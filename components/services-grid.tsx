@@ -1,6 +1,6 @@
 "use client";
 
-import { Sun, Zap, Wrench } from "lucide-react";
+import { Sun, Zap, CctvIcon, DollarSign } from "lucide-react";
 import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
@@ -10,9 +10,9 @@ export default function ServicesGrid() {
   const services = [
     {
       icon: Sun,
-      title: "Residential Solar",
+      title: "Residential and Industrial Solar",
       description:
-        "High-performance and cost-saving solar installation for homes.",
+        "High-performance and cost-saving solar installation for homes and custom electrical for industrial enviroments including solar troubleshooting services.",
       gradient:
         theme === "dark"
           ? "from-amber-500/20 to-amber-600/10"
@@ -34,15 +34,28 @@ export default function ServicesGrid() {
       bgColor: theme === "dark" ? "bg-emerald-500/10" : "bg-emerald-600/60",
     },
     {
-      icon: Wrench,
-      title: "Industrial & Commercial",
-      description: "Custom electrical and solar troubleshooting services.",
+      icon: CctvIcon,
+      title: "Smart Security & CCTV Surveillance Installation",
+      description:
+        "Protect what matters most with intelligent, 24/7 surveillance networks. We design and install high-definition IP cameras, smart doorbells, and remote-view monitoring systems customized to your property layout.",
       gradient:
         theme === "dark"
           ? "from-cyan-500/20 to-cyan-600/10"
           : "from-cyan-500/60 to-cyan-600/60",
       border: theme === "dark" ? "border-cyan-500/30" : "border-cyan-700/60",
       bgColor: theme === "dark" ? "bg-cyan-500/10" : "bg-cyan-600/60",
+    },
+    {
+      icon: DollarSign,
+      title: "Sale of solar Panels, Inverters and other solar devices",
+      description:
+        "Break free from unpredictable grid power and expensive fueling costs. We supply and configure tier-1 solar panels, high-efficiency hybrid inverters, and durable deep-cycle batteries engineered for uninterrupted power.",
+      gradient:
+        theme === "dark"
+          ? "from-red-500/20 to-red-600/10"
+          : "from-red-500/60 to-red-600/60",
+      border: theme === "dark" ? "border-red-500/30" : "border-red-700/60",
+      bgColor: theme === "dark" ? "bg-red-500/10" : "bg-red-600/60",
     },
   ];
 
@@ -82,7 +95,10 @@ export default function ServicesGrid() {
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.7 * (1 + idx), ease: "easeOut" }}
+                transition={{
+                  duration: 0.7 * (1 + (idx % 3)),
+                  ease: "easeOut",
+                }}
                 className={`group p-8 rounded-2xl bg-linear-to-br ${service.gradient} border ${service.border} backdrop-blur-md hover:border-amber-400/50 transition-all duration-300 cursor-pointer hover:-translate-y-1`}
               >
                 <div

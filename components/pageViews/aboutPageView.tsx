@@ -69,7 +69,7 @@ export default function AboutPageView() {
   const { resolvedTheme } = useTheme();
   return (
     <main
-      className={`min-h-screen ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+      className={`min-h-screen overflow-hidden ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
     >
       <Navigation />
 

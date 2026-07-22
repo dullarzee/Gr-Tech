@@ -16,6 +16,18 @@ export const metadata: Metadata = {
   description:
     "Powering Tomorrow, Today. Premium solar solutions for residential, commercial, and industrial applications.",
   generator: "v0.app",
+  keywords: [
+    "GR-Tech",
+    "Gr-Technologies",
+    "GR",
+    "Solar",
+    "Solar installation",
+    "CCTv",
+    "inverter",
+    "Surveillance Camera",
+    "Engineering firm",
+    "Solar panel",
+  ],
   icons: {
     icon: [
       {

@@ -36,19 +36,34 @@ export interface FetchedUserTypes {
   updatedAt: string;
 }
 
+type OrderStatusTypes =
+  | "pending"
+  | "processing"
+  | "shipped"
+  | "completed"
+  | "cancelled";
+
 export interface OrderTypes {
   id: string;
   userId: string;
   totalAmount: number;
   shippingFee?: number;
   tax?: number;
-  status: string;
+  status: OrderStatusTypes;
   paymentReference?: string;
+  trackingNumber: string; //experimental field
   paymentStatus: string;
   shippingAddress?: string;
   phoneNumber?: string;
   email: string;
-  items: [];
+  items: {
+    id: string;
+    orderId: string;
+    productId: string;
+    productName: string;
+    price: number; // Snapshot of the price at checkout (prevents old order totals changing)
+    quantity: number;
+  }[];
   user: {
     id: string;
     name: string;

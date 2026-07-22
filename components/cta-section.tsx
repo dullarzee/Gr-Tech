@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
+import WhatsappUsButton from "./ui/whatsappUsButton";
 
 export default function CTASection({
   Heading = "Switch to Solar Energy Today",
@@ -31,10 +32,13 @@ export default function CTASection({
           >
             {paragraph}
           </p>
-          <Button className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-lg group">
-            Get Started Now
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <div className="flex gap-4 justify-center">
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-lg group">
+              Get Started Now
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <WhatsappUsButton phoneNumber={2348148244729} />
+          </div>
         </div>
       </motion.section>
     </div>

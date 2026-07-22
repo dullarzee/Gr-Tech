@@ -4,6 +4,7 @@ import { Award, Zap, Users, TrendingUp } from "lucide-react";
 import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function WhyChooseUs() {
   const { theme } = useTheme();
@@ -42,7 +43,7 @@ export default function WhyChooseUs() {
                     key={idx}
                     className={`flex items-center gap-4 ${theme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`}
                   >
-                    <div className="w-10 h-10 rounded-lg bg-amber-400/20 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-amber-400/20 flex items-center justify-center shrink-0">
                       <Icon className="w-5 h-5 text-amber-400" />
                     </div>
                     <span className="">{item.text}</span>
@@ -60,21 +61,14 @@ export default function WhyChooseUs() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="relative h-96 rounded-2xl bg-linear-to-br from-zinc-800/50 to-emerald-900/30 border border-emerald-500/20 overflow-hidden flex items-center justify-center"
           >
-            <div className="text-center">
-              <svg
-                className="w-32 h-32 mx-auto text-emerald-400/30 mb-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1}
-                  d="M12 19l9-2m0 0l-12-5m12 5l-12-5m12 5v-7m0-7l-9 2m0 0l12-5m-12 5l12-5"
-                />
-              </svg>
-              <p className="text-zinc-500 text-sm">Solar Technology Stack</p>
+            <div className="text-center h-full w-full">
+              <Image
+                alt="Engineers working on rooftop"
+                src="/images/rooftopSolarInstall.jpg"
+                width={200}
+                height={200}
+                className="object-cover aspect-square h-full w-full"
+              />
             </div>
           </motion.div>
         </div>
