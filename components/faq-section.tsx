@@ -62,11 +62,11 @@ export default function FAQSection() {
           {faqs.map((faq, idx) => (
             <motion.div
               key={idx}
-              initial={{ x: -300 }}
+              initial={{ x: -150 }}
               whileInView={{ x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className={`p-6 rounded-xl border hover:border-amber-400/20 transition-all cursor-pointer ${theme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
+              className={`p-6 rounded-xl border hover:border-amber-400/20 cursor-pointer ${theme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
               onClick={() => setExpandedIdx(expandedIdx === idx ? null : idx)}
             >
               <div className="flex items-center justify-between">

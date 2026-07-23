@@ -66,12 +66,12 @@ export default function Contact() {
       icon: Phone,
       label: "Phone",
       value: "+234 8091691064",
-      detail: "Available Monday-Friday, 9AM-6PM EST",
+      detail: "Available Monday-Saturday, 9AM-6PM EST",
     },
     {
       icon: Mail,
       label: "Email",
-      value: "info@solarbloom.com",
+      value: "Grtechservices2@gmail.com",
       detail: "We respond within 24 hours",
     },
     {
@@ -84,7 +84,7 @@ export default function Contact() {
       icon: Clock,
       label: "Hours",
       value: "9:00 AM - 6:00 PM WAT",
-      detail: "Monday through Friday",
+      detail: "Monday through Saturday",
     },
   ];
 

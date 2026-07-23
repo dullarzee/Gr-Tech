@@ -9,7 +9,7 @@ export default function WhatsappUsButton({
     <a href={`https://wa.me/${phoneNumber}`} target="_blank">
       <button
         aria-label="whatsapp button"
-        className="rounded-md w-50 text-lg h-13 bg-green-400"
+        className="rounded-md w-full lg:w-50 text-lg h-13 bg-green-400"
       >
         <div className="flex gap-2 justify-center">
           <Image

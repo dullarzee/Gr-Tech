@@ -5,8 +5,6 @@ import axios from "axios";
 import { BEendpoints } from "@/constants/urls/backendUrls";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useSharedContext } from "@/components/ui/sharedContextProvider";
-//import { useCart } from "./cart-context";
 
 interface User {
   id: string;
@@ -15,11 +13,23 @@ interface User {
   role?: string;
 }
 
+interface AdminUser {
+  id: string;
+  email: string;
+  name: string;
+  role?: string;
+  createdAt: string;
+  updatedAt: string;
+  isActive: string;
+}
+
 interface AuthContextType {
   user: User | null;
+  adminUser: AdminUser | null;
   loading: boolean;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
+  adminLogin: (email: string, password: string) => Promise<void>;
   register: (
     email: string,
     password: string,
@@ -34,16 +44,38 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   // Initialize auth from localStorage
   useEffect(() => {
+    const checkAdminAuth = async () => {
+      try {
+        const adminRes = await axios.get(
+          BEendpoints.check_admin_user_auth_status,
+          {
+            withCredentials: true,
+          },
+        );
+
+        //check admin user
+        if (!adminRes.data.ok) {
+          setAdminUser(null);
+        } else {
+          setAdminUser(adminRes.data.data);
+        }
+      } catch (err) {
+        console.error("Auth check failed:", err);
+      }
+    };
     const checkAuth = async () => {
       try {
         const res = await axios.get(BEendpoints.check_user_auth_status, {
           withCredentials: true,
         });
+
+        //check user
         if (!res.data.ok) {
           setUser(null);
         } else {
@@ -57,6 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     checkAuth();
+    checkAdminAuth();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -78,6 +111,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       setUser(userData);
+    } catch (error: any) {
+      const message = error.response?.data?.message || "Login failed";
+      throw new Error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const adminLogin = async (email: string, password: string) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        BEendpoints.login_admin_user,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true },
+      );
+
+      const { data: userData, message, ok } = response.data;
+
+      if (!ok) {
+        throw new Error(message || "Login failed");
+      }
+
+      setAdminUser(userData);
     } catch (error: any) {
       const message = error.response?.data?.message || "Login failed";
       throw new Error(message);
@@ -137,9 +197,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value: AuthContextType = {
     user,
+    adminUser,
     loading,
     isAuthenticated: !!user,
     login,
+    adminLogin,
     register,
     logout,
     updateUser,

@@ -12,7 +12,9 @@ const EPs = {
   get_users: `${backendUrl}/api/auth/users`,
   register_user: `${backendUrl}/api/auth/register`,
   login_user: `${backendUrl}/api/auth/login`,
+  login_admin_user: `${backendUrl}/api/auth/adminLogin`,
   check_user_auth_status: `${backendUrl}/api/auth/checkAuth`,
+  check_admin_user_auth_status: `${backendUrl}/api/auth/checkAdminAuth`,
   logout: `${backendUrl}/api/auth/logout`,
   get_products: (limit?: number, sortBy?: string) =>
     `${backendUrl}/api/products?limit=${limit}&sortBy=${sortBy}`,

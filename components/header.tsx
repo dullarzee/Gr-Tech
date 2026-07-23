@@ -171,17 +171,26 @@ export default function Navigation() {
             initial={{ y: 1000, opacity: 0.5 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className={`fixed flex flex-col lg:hidden top-0 left-0 h-screen z-100 w-screen pt-4 ${isDarkTheme ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+            className={`fixed flex flex-col lg:hidden top-0 left-0 h-screen z-100 w-screen pt-4 ${isDarkTheme ? "bg-black" : themePalette.light.backgroundPrimary}`}
           >
             <div className="flex items-center justify-between px-6 py-4">
               <Link href="/cart">
                 <div className="relative inline-flex justify-center items-center">
-                  <ShoppingCart
+                  {/* <ShoppingCart
                     className={`w-6 h-6 ${isDarkTheme ? "text-white" : "text-zinc-900"}`}
                   />
                   <span className="bg-amber-500 absolute -top-5 -right-3 text-white text-[0.65em] px-2.5 py-0.5 block rounded-full">
                     {items.length}
-                  </span>
+                  </span> */}
+                  <ShoppingCart
+                    className={`w-4.5 h-4.5 hover:text-amber-400 ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                  />
+
+                  {items.length > 0 && (
+                    <span className="bg-amber-500 absolute -top-3.5 -right-4 text-white text-[0.65em] px-2.5 py-0.5 block rounded-full">
+                      {items.length}
+                    </span>
+                  )}
                 </div>
               </Link>
               {isDarkTheme ? (

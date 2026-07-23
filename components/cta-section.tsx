@@ -6,12 +6,14 @@ import { themePalette } from "@/lib/palette";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import WhatsappUsButton from "./ui/whatsappUsButton";
+import { useRouter } from "next/navigation";
 
 export default function CTASection({
   Heading = "Switch to Solar Energy Today",
   paragraph = "Join thousands of homeowners and businesses already saving with clean, renewable energy.",
 }) {
   const { theme, resolvedTheme } = useTheme();
+  const router = useRouter();
 
   return (
     <div className={`${resolvedTheme === "dark" ? "bg-black" : "bg-white"}`}>
@@ -32,12 +34,15 @@ export default function CTASection({
           >
             {paragraph}
           </p>
-          <div className="flex gap-4 justify-center">
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-lg group">
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => router.push("/contact")}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-6 text-lg group"
+            >
               Get Started Now
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <WhatsappUsButton phoneNumber={2348148244729} />
+            <WhatsappUsButton phoneNumber={2349162706881} />
           </div>
         </div>
       </motion.section>

@@ -53,11 +53,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const { user, isAuthenticated } = useAuth();
 
-  // Initialize cart from localStorage
   useEffect(() => {
     const initializeCart = async () => {
-      console.log("stop 1");
-      console.log("user", user);
       if (!user) return;
       console.log("stop 2");
 
