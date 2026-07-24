@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { adminNavLinks } from "@/constants/urls/adminNavLinks";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
 
 export default function AdminRootLayout({
   children,
@@ -14,23 +15,10 @@ export default function AdminRootLayout({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
-  const [adminUser, setAdminUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    // Check if admin is logged in
-    const token = localStorage.getItem("adminToken");
-    const user = localStorage.getItem("adminUser");
-
-    if (!token || !user) {
-      router.push("/admin/login");
-    } else {
-      setAdminUser(JSON.parse(user));
-      setLoading(false);
-    }
-  }, [router]);
+  const { adminUser } = useAuth();
 
   const title =
     adminNavLinks.find((link) => activeTab.includes(link.label))?.label ||

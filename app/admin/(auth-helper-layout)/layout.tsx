@@ -9,15 +9,15 @@ export default function AuthHelperLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [loading, setLoading] = useState(true);
-  const { adminUser } = useAuth();
+  const { adminUser, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    setLoading(false);
-  }, [adminUser]);
+    if (!loading && !adminUser) {
+      router.replace("/admin/login");
+    }
+  }, [loading, adminUser, router]);
 
-  if (!adminUser && !loading) router.push("/admin/login");
   if (loading)
     return (
       <div className="flex h-screen w-full items-center justify-center bg-gray-900">

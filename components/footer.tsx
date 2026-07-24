@@ -1,10 +1,10 @@
 "use client";
 
-import { Sun } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { themePalette } from "@/lib/palette";
 import Link from "next/link";
+import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
   const { theme } = useTheme();
@@ -123,18 +123,32 @@ export default function Footer() {
                   href="mailto:hello@solarbloom.com"
                   className="hover:text-amber-400 transition"
                 >
-                  hello@solarbloom.com
+                  Grtechservices2@gmail.com
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+2348091691064"
                   className="hover:text-amber-400 transition"
                 >
-                  +1 (234) 567-8900
+                  +234 80 9169 1064
                 </a>
               </li>
-              <li className="pt-2">Follow us on social</li>
+              <li className="pt-2">Follow us on our socials</li>
+              <section className="flex gap-4 mt-3">
+                <a
+                  target="_blank"
+                  href={`https://instagram.com/gr_tech_services`}
+                >
+                  <FaInstagram className="w-8 h-8" />
+                </a>
+                <a target="_blank" href={`https://tiktok.com/@grtechservices1`}>
+                  <FaTiktok className="w-8 h-8" />
+                </a>
+                <a target="_blank" href={`https://facebook.com`}>
+                  <FaFacebook className="w-8 h-8" />
+                </a>
+              </section>
             </ul>
           </div>
         </div>
@@ -142,7 +156,8 @@ export default function Footer() {
         <div className="border-t border-zinc-800/50 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-xs text-zinc-500">
             <p>
-              &copy; {new Date().getFullYear()} SolarBloom. All rights reserved.
+              &copy; {new Date().getFullYear()} Gr Technologies. All rights
+              reserved.
             </p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <a href="#" className="hover:text-amber-400 transition">

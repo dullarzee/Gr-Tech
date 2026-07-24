@@ -19,6 +19,7 @@ export default function ShopPage() {
   const [sortBy, setSortBy] = useState("popular");
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(10);
+  const [showFilters, setShowFilters] = useState(false);
   const { resolvedTheme } = useTheme();
 
   const router = useRouter();
@@ -81,8 +82,11 @@ export default function ShopPage() {
             </h1>
             <p className="text-zinc-400 text-lg max-w-2xl">
               Discover our curated collection of high-efficiency solar panels,
-              inverters, batteries, and accessories. All products are certified
-              and backed by industry-leading warranties.
+              inverters, batteries, and accessories.{" "}
+              <span className="hidden md:inline">
+                All products are certified and backed by industry-leading
+                warranties.
+              </span>
             </p>
           </div>
         </section>
@@ -94,7 +98,8 @@ export default function ShopPage() {
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-4 gap-12">
               {/* Sidebar Filters */}
-              <div className="lg:col-span-1">
+              {/*visible for on large screen*/}
+              <div className="lg:col-span-1 hidden lg:block">
                 <div className="sticky top-32">
                   <div className="mb-8">
                     <h3
@@ -139,7 +144,7 @@ export default function ShopPage() {
                   </div>
 
                   <div
-                    className={`p-4 rounded-lg border ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
+                    className={`p-4 rounded-lg border hidden lg:block ${resolvedTheme === "dark" ? themePalette.dark.translucent_bg : themePalette.light.translucent_bg}`}
                   >
                     <h4
                       className={`font-semibold mb-3 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
@@ -160,6 +165,63 @@ export default function ShopPage() {
                     </Button>
                   </div>
                 </div>
+              </div>
+
+              {/*filters visible on mobile screen */}
+              <div className="block lg:hidden">
+                <Button
+                  onClick={() => setShowFilters((prev) => !prev)}
+                  variant={showFilters ? "secondary" : "outline"}
+                  className={`mb-4 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                >
+                  {showFilters ? "Hide filters" : "Show filters"}
+                </Button>
+
+                {showFilters && (
+                  <div>
+                    <div className="mb-8">
+                      <h3
+                        className={`text-lg font-bold mb-4 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                      >
+                        Categories
+                      </h3>
+                      <div className="space-y-2">
+                        {categories.map((cat) => (
+                          <button
+                            key={cat.id}
+                            onClick={() => setSelectedCategory(cat.id)}
+                            className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                              selectedCategory === cat.id
+                                ? "bg-amber-400 text-zinc-950 font-semibold"
+                                : `hover:bg-zinc-800/50 ${resolvedTheme === "dark" ? themePalette.dark.paragragh_text : themePalette.light.paragragh_text}`
+                            }`}
+                          >
+                            {cat.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mb-8">
+                      <h3
+                        className={`text-lg font-bold mb-4 ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+                      >
+                        Sort By
+                      </h3>
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className={`w-full border rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-amber-400 ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
+                      >
+                        {sortByOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Products Grid */}

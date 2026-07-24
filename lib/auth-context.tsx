@@ -48,48 +48,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // Initialize auth from localStorage
   useEffect(() => {
-    const checkAdminAuth = async () => {
+    const initializeAuth = async () => {
       try {
-        const adminRes = await axios.get(
-          BEendpoints.check_admin_user_auth_status,
-          {
+        const [userRes, adminRes] = await Promise.allSettled([
+          axios.get(BEendpoints.check_user_auth_status, {
             withCredentials: true,
-          },
-        );
+          }),
+          axios.get(BEendpoints.check_admin_user_auth_status, {
+            withCredentials: true,
+          }),
+        ]);
 
-        //check admin user
-        if (!adminRes.data.ok) {
-          setAdminUser(null);
+        if (userRes.status === "fulfilled" && userRes.value.data.ok) {
+          setUser(userRes.value.data.data);
         } else {
-          setAdminUser(adminRes.data.data);
-        }
-      } catch (err) {
-        console.error("Auth check failed:", err);
-      }
-    };
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get(BEendpoints.check_user_auth_status, {
-          withCredentials: true,
-        });
-
-        //check user
-        if (!res.data.ok) {
           setUser(null);
+        }
+
+        if (adminRes.status === "fulfilled" && adminRes.value.data.ok) {
+          setAdminUser(adminRes.value.data.data);
         } else {
-          setUser(res.data.data);
+          setAdminUser(null);
         }
       } catch (error) {
-        console.error("Auth check failed:", error);
+        console.error("Auth initialization failed:", error);
+        setUser(null);
+        setAdminUser(null);
       } finally {
         setLoading(false);
       }
     };
 
-    checkAuth();
-    checkAdminAuth();
+    void initializeAuth();
   }, []);
 
   const login = async (email: string, password: string) => {
