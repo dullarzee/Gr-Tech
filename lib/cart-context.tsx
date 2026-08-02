@@ -45,6 +45,7 @@ interface CartContextType {
   total: number;
   itemCount: number;
   syncWithBackend: () => Promise<void>;
+  loading: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -52,6 +53,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const { user, isAuthenticated } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const initializeCart = async () => {
@@ -71,15 +73,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     initializeCart();
   }, [user]);
 
-  // Save cart to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items));
-  }, [items]);
-
   const addItem = async (newItem: CartItem) => {
     if (!user) throw new Error("User must be logged in");
 
     try {
+      setLoading(true);
       //adding item on DB
       const res = await axios.post(BEendpoints.add_to_cart, {
         productId: newItem.id,
@@ -91,6 +89,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch (err) {
       toast.error("Failed to update cart");
       return;
+    } finally {
+      setLoading(false);
     }
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === newItem.id);
@@ -149,7 +149,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (!user) return;
     try {
       const res = await axios.delete(BEendpoints.clear_cart(user.id));
-      if (res.data.ok) toast.success("Cleared cart succesfully");
+      if (res.data.ok) console.log("Cleared cart succesfully");
       else throw new Error("Failed to update cart");
     } catch (err) {
       return toast.error(
@@ -215,6 +215,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     total,
     itemCount,
     syncWithBackend,
+    loading,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

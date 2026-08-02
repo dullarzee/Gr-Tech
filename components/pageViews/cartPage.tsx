@@ -168,7 +168,7 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-zinc-400">Shipping</span>
-                    <span className="font-semibold text-emerald-400">Free</span>
+                    <span className="font-semibold text-emerald-400">TBD</span>
                   </div>
                   {/* <div className="flex justify-between text-sm">
                     <span

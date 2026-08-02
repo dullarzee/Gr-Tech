@@ -13,7 +13,7 @@ export default function AboutSection() {
       <motion.section
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.4 }}
         className={`py-20 px-6 border-t ${theme === "dark" ? themePalette.dark.bg_secondary : themePalette.light.bg_secondary}`}
       >
         <div

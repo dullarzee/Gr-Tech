@@ -238,7 +238,7 @@ export default function CheckoutPage() {
                   <p
                     className={`font-semibold ${resolvedTheme === "dark" ? themePalette.dark.text_light : themePalette.light.text_dark}`}
                   >
-                    ${(item.price * item.quantity).toLocaleString()}
+                    ₦{(item.price * item.quantity).toLocaleString()}
                   </p>
                 </div>
               ))}
@@ -250,7 +250,7 @@ export default function CheckoutPage() {
                 Total:
               </span>
               <span className="text-2xl font-bold text-amber-400">
-                ${total.toLocaleString()}
+                ₦{total.toLocaleString()}
               </span>
             </div>
           </div>

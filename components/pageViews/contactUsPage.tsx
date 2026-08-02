@@ -90,7 +90,7 @@ export default function Contact() {
 
   return (
     <main
-      className={`min-h-screen w-full border border-red-5000 text-white ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+      className={`min-h-screen w-full overflow-hidden text-white ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
     >
       <Navigation />
 

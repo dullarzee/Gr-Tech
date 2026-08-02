@@ -33,7 +33,7 @@ export default function ProductDetailPage() {
   const { resolvedTheme } = useTheme();
   const params = useParams();
   const router = useRouter();
-  const { addItem } = useCart();
+  const { addItem, loading: isWritingToCart } = useCart();
   const { isAuthenticated } = useAuth();
 
   const [product, setProduct] = useState<ProductTypes | null>(null);
@@ -196,7 +196,7 @@ export default function ProductDetailPage() {
               <div className="mb-8">
                 <p className="text-zinc-400 text-sm mb-2">Price</p>
                 <p className="text-4xl md:text-5xl font-bold text-amber-400">
-                  ${product.price.toLocaleString()}
+                  ₦{product.price.toLocaleString()}
                 </p>
               </div>
 
@@ -269,7 +269,7 @@ export default function ProductDetailPage() {
             <div className="space-y-3 md:space-y-0 md:flex gap-3">
               <Button
                 onClick={handleAddToCart}
-                disabled={product.stock <= 0}
+                disabled={product.stock <= 0 || isWritingToCart}
                 className={`flex-1 font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all bg-amber-400 text-zinc-950 hover:bg-amber-300`}
               >
                 {!isAuthenticated ? (
@@ -277,7 +277,7 @@ export default function ProductDetailPage() {
                 ) : (
                   <>
                     <ShoppingCart className="w-5 h-5" />
-                    Add to Cart
+                    {isWritingToCart ? "Adding..." : "Add to Cart"}
                   </>
                 )}
               </Button>

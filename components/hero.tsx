@@ -78,7 +78,7 @@ export default function Hero() {
         </h1>
 
         {/* Main Content - Asymmetric Layout */}
-        <div className="relative grid md:grid-cols-[25%_45%_30%] gap-8 items-start mb-16">
+        <div className="relative grid lg:grid-cols-[25%_45%_30%] gap-8 items-start mb-16">
           {/* Left Column - Cards */}
           <div className="hidden lg:block space-y-4">
             {/* Environment Score Card */}

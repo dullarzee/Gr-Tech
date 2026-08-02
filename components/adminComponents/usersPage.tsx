@@ -14,10 +14,12 @@ export default function UsersPage() {
   const [deleteTarget, setDeleteTarget] = useState<FetchedUserTypes | null>(
     null,
   );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetch = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(BEendpoints.get_users);
         if (!res.data.ok) throw new Error("failed to fetch products");
 
@@ -25,6 +27,8 @@ export default function UsersPage() {
         setUsers(res.data.data);
       } catch (err) {
         toast.error(err instanceof Error && err.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetch();
@@ -44,6 +48,16 @@ export default function UsersPage() {
       setDeleteTarget(null);
     }
   };
+
+  if (loading)
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border border-amber-400/20 border-t-amber-400 mx-auto mb-4"></div>
+          <p className="text-zinc-400">Loading...</p>
+        </div>
+      </div>
+    );
 
   return (
     <div className="bg-linear-to-br from-zinc-800/50 to-zinc-900/50 border border-zinc-700/50 rounded-xl overflow-hidden">

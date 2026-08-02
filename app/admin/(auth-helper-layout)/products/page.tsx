@@ -14,9 +14,11 @@ import AdminProductCard from "@/components/adminComponents/adminProductCard";
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductTypes[]>([]);
   const [deleteTarget, setDeleteTarget] = useState<ProductTypes | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(BEendpoints.get_products());
       if (!res.data.ok) throw new Error("failed to fetch products");
       setProducts(res.data.data);
@@ -24,6 +26,8 @@ export default function ProductsPage() {
       toast.error(
         err instanceof Error ? err.message : "Unable to load products",
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,6 +56,16 @@ export default function ProductsPage() {
       setDeleteTarget(null);
     }
   };
+
+  if (loading)
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border border-amber-400/20 border-t-amber-400 mx-auto mb-4"></div>
+          <p className="text-zinc-400">Loading...</p>
+        </div>
+      </div>
+    );
 
   return (
     <>

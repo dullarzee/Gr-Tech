@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Menu, X, ShoppingCart } from "lucide-react";
+import {
+  Sun,
+  Moon,
+  Menu,
+  X,
+  ShoppingCart,
+  ChevronDown,
+  MoreHorizontal,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -28,10 +36,11 @@ export default function Navigation() {
   const links = [
     { name: "home", path: "/" },
     { name: "shop", path: "/products" },
-    { name: "resources", path: "/resources" },
     { name: "about", path: "/about" },
     { name: "contact", path: "/contact" },
     { name: "cart", path: "/cart" },
+    { name: "my orders", path: "/orders" },
+    { name: "resources", path: "/resources" },
   ];
 
   useEffect(() => {
@@ -86,18 +95,18 @@ export default function Navigation() {
       </Link>
 
       <div
-        className={`hidden md:flex items-center text-sm border-3 border-gray-500/50 p-1 rounded-lg ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+        className={`hidden lg:flex items-center text-sm border-3 border-gray-500/50 p-1 rounded-lg ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
       >
-        {links.map((link, idx) => (
+        {links.slice(0, 5).map((link, idx) => (
           <Link
             key={link.name}
             href={link.path}
             className={`hover:text-amber-400 transition-colors capitalize px-3 py-1 rounded-sm ${activeLink === link.path ? "bg-gray-500/50" : "bg-none"}`}
           >
-            {idx < links.length - 1 ? (
+            {idx < 4 ? (
               link.name
             ) : (
-              <div className="relative inline-flex justify-center items-center">
+              <div className="relative inline-flex px-2 justify-center items-center">
                 <ShoppingCart
                   className={`w-4.5 h-4.5 hover:text-amber-400 ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
                 />
@@ -111,6 +120,38 @@ export default function Navigation() {
             )}
           </Link>
         ))}
+        {/*extra links as in a dropdown*/}
+        <div className="relative group cursor-pointer">
+          <span
+            className={`inline-flex cursor-pointer group-hover:text-amber-400 ${resolvedTheme === "dark" ? "text-amber-400" : "text-amber-500"}`}
+          >
+            <MoreHorizontal className="text-gray-400 group-hover:text-amber-400" />
+          </span>
+          <section
+            className={`absolute top-[50%] pt-[80%] hidden group-hover:flex cursor-default mx-auto`}
+          >
+            <div
+              className={`min-h-10 min-w-28 px-3 py-2 rounded-lg ${resolvedTheme === "dark" ? themePalette.dark.chip_style : themePalette.light.chip_style}`}
+            >
+              <ul className="flex flex-col space-y-1">
+                {links.slice(5).map((link) => {
+                  return (
+                    <li>
+                      {" "}
+                      <Link
+                        key={link.name}
+                        href={link.path}
+                        className={`hover:text-amber-400 transition-colors capitalize px-3 py-1 rounded-sm ${activeLink === link.path ? "bg-gray-500/50" : "bg-none"}`}
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </section>
+        </div>
       </div>
 
       <div className="flex items-center gap-3">
@@ -126,7 +167,7 @@ export default function Navigation() {
               <Moon className="w-4 h-4 text-zinc-950 " />
             )}
           </Button>
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
               onClick={() => setShowMobileMenu((prev) => !prev)}
               size="sm"
@@ -138,7 +179,7 @@ export default function Navigation() {
         {user ? (
           <>
             <span
-              className={`hidden md:inline-flex text-sm font-semibold ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
+              className={`hidden lg:inline-flex text-sm font-semibold ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
             >
               {user.name.length > 13
                 ? `${user?.name.slice(0, 13)}...`
@@ -176,12 +217,6 @@ export default function Navigation() {
             <div className="flex items-center justify-between px-6 py-4">
               <Link href="/cart">
                 <div className="relative inline-flex justify-center items-center">
-                  {/* <ShoppingCart
-                    className={`w-6 h-6 ${isDarkTheme ? "text-white" : "text-zinc-900"}`}
-                  />
-                  <span className="bg-amber-500 absolute -top-5 -right-3 text-white text-[0.65em] px-2.5 py-0.5 block rounded-full">
-                    {items.length}
-                  </span> */}
                   <ShoppingCart
                     className={`w-4.5 h-4.5 hover:text-amber-400 ${isDarkTheme ? themePalette.dark.text_light : themePalette.light.text_dark}`}
                   />

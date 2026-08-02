@@ -79,7 +79,7 @@ const getStatusLabel = (status: Order["status"]) => {
 };
 
 export default function OrdersPage() {
-  const { isAuthenticated, user } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"all" | "pending" | "completed">(
     "all",
@@ -92,7 +92,7 @@ export default function OrdersPage() {
   useEffect(() => {
     console.log("in useffect ");
     const fetch = async () => {
-      if (!user) return;
+      if (!user) return setLoading(false);
       try {
         setLoading(true);
         const res = await axios.get(BEendpoints.get_user_orders(user.id));
@@ -121,10 +121,10 @@ export default function OrdersPage() {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
     return (
       <div
-        className={`pt-32 pb-20 px-4 md:px-8 ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
+        className={`flex items-center justify-center pb-20 px-4 md:px-8 min-h-screen ${resolvedTheme === "dark" ? themePalette.dark.backgroundPrimary : themePalette.light.backgroundPrimary}`}
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center py-12">
